@@ -2,22 +2,22 @@
 <div class="leftside-menu">
 
     <!-- Brand Logo Light -->
-    <a href="{{ route('any', 'index') }}" class="logo logo-light">
+    <a href="{{ route('home') }}" class="logo logo-light">
         <span class="logo-lg">
-            <img src="/images/logo.png" alt="logo">
+            <img src="{{ asset('images/logo.png') }}" alt="logo">
         </span>
         <span class="logo-sm">
-            <img src="/images/logo-sm.png" alt="small logo">
+            <img src="{{ asset('images/logo-sm.png') }}" alt="small logo">
         </span>
     </a>
 
     <!-- Brand Logo Dark -->
-    <a href="{{ route('any', 'index') }}" class="logo logo-dark">
+    <a href="{{ route('home') }}" class="logo logo-dark">
         <span class="logo-lg">
-            <img src="/images/logo-dark.png" alt="dark logo">
+            <img src="{{ asset('images/logo-dark.png') }}" alt="dark logo">
         </span>
         <span class="logo-sm">
-            <img src="/images/logo-sm.png" alt="small logo">
+            <img src="{{ asset('images/logo-sm.png') }}" alt="small logo">
         </span>
     </a>
 
@@ -26,10 +26,10 @@
         <!--- Sidemenu -->
         <ul class="side-nav">
 
-            <li class="side-nav-title">Main</li>
+            {{--            <li class="side-nav-title">Main</li>--}}
 
             <li class="side-nav-item">
-                <a href="{{ route('any', 'index') }}" class="side-nav-link">
+                <a href="{{ route('home') }}" class="side-nav-link">
                     <i class="ri-dashboard-3-line"></i>
                     <span class="badge bg-success float-end">9+</span>
                     <span> Dashboard </span>
@@ -37,8 +37,27 @@
             </li>
 
             <li class="side-nav-item">
+                <a data-bs-toggle="collapse" href="#eventManagementPages" aria-expanded="false" aria-controls="eventManagementPages"
+                   class="side-nav-link">
+                    <i class="ri-pages-line"></i>
+                    <span> Event Management </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="eventManagementPages">
+                    <ul class="side-nav-second-level">
+                        <li>
+                            <a href="{{ route('event_company_management.index') }}">Company Management</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('event_management.index') }}">Event Management</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            {{--<li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarPages" aria-expanded="false" aria-controls="sidebarPages"
-                    class="side-nav-link">
+                   class="side-nav-link">
                     <i class="ri-pages-line"></i>
                     <span> Pages </span>
                     <span class="menu-arrow"></span>
@@ -84,7 +103,7 @@
 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarPagesAuth" aria-expanded="false"
-                    aria-controls="sidebarPagesAuth" class="side-nav-link">
+                   aria-controls="sidebarPagesAuth" class="side-nav-link">
                     <i class="ri-group-2-line"></i>
                     <span> Authentication </span>
                     <span class="menu-arrow"></span>
@@ -112,7 +131,7 @@
 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarLayouts" aria-expanded="false" aria-controls="sidebarLayouts"
-                    class="side-nav-link">
+                   class="side-nav-link">
                     <i class="ri-layout-line"></i>
                     <span class="badge bg-warning float-end">New</span>
                     <span> Layouts </span>
@@ -123,16 +142,20 @@
                             <a href="{{ route('second', ['layouts-eg', 'horizontal']) }}" target="_blank">Horizontal</a>
                         </li>
                         <li>
-                            <a href="{{ route('second', ['layouts-eg', 'light-sidebar']) }}" target="_blank">Light Sidebar</a>
+                            <a href="{{ route('second', ['layouts-eg', 'light-sidebar']) }}" target="_blank">Light
+                                Sidebar</a>
                         </li>
                         <li>
-                            <a href="{{ route('second', ['layouts-eg', 'sm-sidebar']) }}" target="_blank">Small Sidebar</a>
+                            <a href="{{ route('second', ['layouts-eg', 'sm-sidebar']) }}" target="_blank">Small
+                                Sidebar</a>
                         </li>
                         <li>
-                            <a href="{{ route('second', ['layouts-eg', 'collapsed-sidebar']) }}" target="_blank">Collapsed Sidebar</a>
+                            <a href="{{ route('second', ['layouts-eg', 'collapsed-sidebar']) }}" target="_blank">Collapsed
+                                Sidebar</a>
                         </li>
                         <li>
-                            <a href="{{ route('second', ['layouts-eg', 'unsticky-layout']) }}" target="_blank">Unsticky Layout</a>
+                            <a href="{{ route('second', ['layouts-eg', 'unsticky-layout']) }}" target="_blank">Unsticky
+                                Layout</a>
                         </li>
                         <li>
                             <a href="{{ route('second', ['layouts-eg', 'boxed']) }}" target="_blank">Boxed Layout</a>
@@ -145,7 +168,7 @@
 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarBaseUI" aria-expanded="false" aria-controls="sidebarBaseUI"
-                    class="side-nav-link">
+                   class="side-nav-link">
                     <i class="ri-briefcase-line"></i>
                     <span> Base UI </span>
                     <span class="menu-arrow"></span>
@@ -236,7 +259,7 @@
 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarExtendedUI" aria-expanded="false"
-                    aria-controls="sidebarExtendedUI" class="side-nav-link">
+                   aria-controls="sidebarExtendedUI" class="side-nav-link">
                     <i class="ri-compasses-2-line"></i>
                     <span> Extended UI </span>
                     <span class="menu-arrow"></span>
@@ -260,7 +283,7 @@
             </li>
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarIcons" aria-expanded="false" aria-controls="sidebarIcons"
-                    class="side-nav-link">
+                   class="side-nav-link">
                     <i class="ri-pencil-ruler-2-line"></i>
                     <span> Icons </span>
                     <span class="menu-arrow"></span>
@@ -282,7 +305,7 @@
 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarCharts" aria-expanded="false"
-                    aria-controls="sidebarCharts" class="side-nav-link">
+                   aria-controls="sidebarCharts" class="side-nav-link">
                     <i class="ri-donut-chart-fill"></i>
                     <span> Charts </span>
                     <span class="menu-arrow"></span>
@@ -304,7 +327,7 @@
 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarForms" aria-expanded="false" aria-controls="sidebarForms"
-                    class="side-nav-link">
+                   class="side-nav-link">
                     <i class="ri-survey-line"></i>
                     <span> Forms </span>
                     <span class="menu-arrow"></span>
@@ -341,7 +364,7 @@
 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarTables" aria-expanded="false"
-                    aria-controls="sidebarTables" class="side-nav-link">
+                   aria-controls="sidebarTables" class="side-nav-link">
                     <i class="ri-table-line"></i>
                     <span> Tables </span>
                     <span class="menu-arrow"></span>
@@ -366,7 +389,7 @@
 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarMaps" aria-expanded="false" aria-controls="sidebarMaps"
-                    class="side-nav-link">
+                   class="side-nav-link">
                     <i class="ri-map-pin-line"></i>
                     <span> Maps </span>
                     <span class="menu-arrow"></span>
@@ -385,7 +408,7 @@
 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarMultiLevel" aria-expanded="false"
-                    aria-controls="sidebarMultiLevel" class="side-nav-link">
+                   aria-controls="sidebarMultiLevel" class="side-nav-link">
                     <i class="ri-share-line"></i>
                     <span> Multi Level </span>
                     <span class="menu-arrow"></span>
@@ -397,7 +420,7 @@
                         </li>
                         <li class="side-nav-item">
                             <a data-bs-toggle="collapse" href="#sidebarSecondLevel" aria-expanded="false"
-                                aria-controls="sidebarSecondLevel">
+                               aria-controls="sidebarSecondLevel">
                                 <span> Level 1.2 </span>
                                 <span class="menu-arrow"></span>
                             </a>
@@ -414,7 +437,7 @@
                         </li>
                         <li class="side-nav-item">
                             <a data-bs-toggle="collapse" href="#sidebarThirdLevel" aria-expanded="false"
-                                aria-controls="sidebarThirdLevel">
+                               aria-controls="sidebarThirdLevel">
                                 <span> Level 1.3 </span>
                                 <span class="menu-arrow"></span>
                             </a>
@@ -425,7 +448,7 @@
                                     </li>
                                     <li class="side-nav-item">
                                         <a data-bs-toggle="collapse" href="#sidebarFourthLevel" aria-expanded="false"
-                                            aria-controls="sidebarFourthLevel">
+                                           aria-controls="sidebarFourthLevel">
                                             <span> Item 2 </span>
                                             <span class="menu-arrow"></span>
                                         </a>
@@ -445,7 +468,7 @@
                         </li>
                     </ul>
                 </div>
-            </li>
+            </li>--}}
 
         </ul>
         <!--- End Sidemenu -->
