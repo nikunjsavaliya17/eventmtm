@@ -1,17 +1,17 @@
-@extends('layouts.vertical', ['title' => 'Event Management', 'mode' => $mode ?? '', 'demo' => $demo ?? ''])
+@extends('layouts.vertical', ['title' => 'Food Menu', 'mode' => $mode ?? '', 'demo' => $demo ?? ''])
 
 @section('css')
 @endsection
 
 @section('content')
-    @include('layouts.shared/page-title',['page_title' => 'Event Management'])
+    @include('layouts.shared/page-title',['page_title' => 'Food Menu'])
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
                     <div class="page-title-box">
                         <div class="page-title-right mt-0">
-                            <a href="{{ route('event_management.add') }}" class="btn btn-success rounded-pill">Add
+                            <a href="{{ route('food_menu.add') }}" class="btn btn-success rounded-pill">Add
                                 New</a>
                         </div>
                     </div>
@@ -21,10 +21,9 @@
                         <table class="table table-striped table-centered mb-0">
                             <thead>
                             <tr>
-                                <th>Event</th>
-                                <th>Company Name</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>SKU</th>
                                 <th>Active</th>
                                 <th>Display Order</th>
                                 <th>Action</th>
@@ -32,10 +31,12 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td>Event 1</td>
-                                <td>Company 1</td>
-                                <td>12/09/2023 12:00 PM</td>
-                                <td>12/09/2023 05:00 PM</td>
+                                <td class="table-user">
+                                    <img src="{{ asset('images/users/avatar-2.jpg') }}" alt="table-user" class="me-2 rounded-circle">
+                                    Item 1
+                                </td>
+                                <td>Food Type 1</td>
+                                <td>10</td>
                                 <td>Yes</td>
                                 <td>1</td>
                                 <td>

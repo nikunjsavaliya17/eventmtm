@@ -1,17 +1,17 @@
-@extends('layouts.vertical', ['title' => 'Event Management', 'mode' => $mode ?? '', 'demo' => $demo ?? ''])
+@extends('layouts.vertical', ['title' => 'Food Partners', 'mode' => $mode ?? '', 'demo' => $demo ?? ''])
 
 @section('css')
 @endsection
 
 @section('content')
-    @include('layouts.shared/page-title',['page_title' => 'Event Management'])
+    @include('layouts.shared/page-title',['page_title' => 'Food Partners'])
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
                     <div class="page-title-box">
                         <div class="page-title-right mt-0">
-                            <a href="{{ route('event_management.add') }}" class="btn btn-success rounded-pill">Add
+                            <a href="{{ route('food_partners.add') }}" class="btn btn-success rounded-pill">Add
                                 New</a>
                         </div>
                     </div>
@@ -21,23 +21,24 @@
                         <table class="table table-striped table-centered mb-0">
                             <thead>
                             <tr>
-                                <th>Event</th>
                                 <th>Company Name</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
+                                <th>Contact Details</th>
                                 <th>Active</th>
-                                <th>Display Order</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
-                                <td>Event 1</td>
-                                <td>Company 1</td>
-                                <td>12/09/2023 12:00 PM</td>
-                                <td>12/09/2023 05:00 PM</td>
+                                <td class="table-user">
+                                    <img src="{{ asset('images/users/avatar-2.jpg') }}" alt="table-user" class="me-2 rounded-circle">
+                                    Food Company 1
+                                </td>
+                                <td>
+                                    <strong>Name:</strong> Test Name <br>
+                                    <strong>Email:</strong> test@gmail.com <br>
+                                    <strong>Phone No:</strong> 7845124578
+                                </td>
                                 <td>Yes</td>
-                                <td>1</td>
                                 <td>
                                     <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
                                             class="ri-edit-2-line"></i></a>

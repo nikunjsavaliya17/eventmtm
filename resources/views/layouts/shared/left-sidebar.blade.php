@@ -31,7 +31,7 @@
             <li class="side-nav-item">
                 <a href="{{ route('home') }}" class="side-nav-link">
                     <i class="ri-dashboard-3-line"></i>
-                    <span class="badge bg-success float-end">9+</span>
+{{--                    <span class="badge bg-success float-end">9+</span>--}}
                     <span> Dashboard </span>
                 </a>
             </li>
@@ -39,7 +39,7 @@
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#eventManagementPages" aria-expanded="false" aria-controls="eventManagementPages"
                    class="side-nav-link">
-                    <i class="ri-pages-line"></i>
+                    <i class="ri-calendar-event-line"></i>
                     <span> Event Management </span>
                     <span class="menu-arrow"></span>
                 </a>
@@ -55,6 +55,61 @@
                 </div>
             </li>
 
+            <li class="side-nav-item">
+                <a data-bs-toggle="collapse" href="#sponsorManagementPages" aria-expanded="false" aria-controls="eventManagementPages"
+                   class="side-nav-link">
+                    <i class="ri-file-user-line"></i>
+                    <span> Sponsor Management </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sponsorManagementPages">
+                    <ul class="side-nav-second-level">
+                        <li>
+                            <a href="{{ route('sponsor_types.index') }}">Types</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('sponsorship_management.index') }}">Sponsorship Management</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="side-nav-item">
+                <a data-bs-toggle="collapse" href="#foodManagementPages" aria-expanded="false" aria-controls="eventManagementPages"
+                   class="side-nav-link">
+                    <i class="ri-pages-line"></i>
+                    <span> Food Management </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="foodManagementPages">
+                    <ul class="side-nav-second-level">
+                        <li>
+                            <a href="{{ route('food_partners.index') }}">Partners</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('food_events.index') }}">Events</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('food_types.index') }}">Types</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('food_menu.index') }}">Menu</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="side-nav-item">
+                <a href="{{ route('orders.index') }}" class="side-nav-link">
+                    <i class="ri-list-unordered"></i>
+                    <span> Orders </span>
+                </a>
+            </li>
+            <li class="side-nav-item">
+                <a href="{{ route('admin_users.index') }}" class="side-nav-link">
+                    <i class="ri-contacts-line"></i>
+                    <span> Admin Users </span>
+                </a>
+            </li>
             {{--<li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarPages" aria-expanded="false" aria-controls="sidebarPages"
                    class="side-nav-link">
@@ -469,10 +524,7 @@
                     </ul>
                 </div>
             </li>--}}
-
         </ul>
-        <!--- End Sidemenu -->
-
         <div class="clearfix"></div>
     </div>
 </div>

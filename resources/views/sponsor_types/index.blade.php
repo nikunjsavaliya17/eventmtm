@@ -1,17 +1,17 @@
-@extends('layouts.vertical', ['title' => 'Event Management', 'mode' => $mode ?? '', 'demo' => $demo ?? ''])
+@extends('layouts.vertical', ['title' => 'Sponsor Types', 'mode' => $mode ?? '', 'demo' => $demo ?? ''])
 
 @section('css')
 @endsection
 
 @section('content')
-    @include('layouts.shared/page-title',['page_title' => 'Event Management'])
+    @include('layouts.shared/page-title',['page_title' => 'Sponsor Types'])
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
                     <div class="page-title-box">
                         <div class="page-title-right mt-0">
-                            <a href="{{ route('event_management.add') }}" class="btn btn-success rounded-pill">Add
+                            <a href="{{ route('sponsor_types.add') }}" class="btn btn-success rounded-pill">Add
                                 New</a>
                         </div>
                     </div>
@@ -21,10 +21,7 @@
                         <table class="table table-striped table-centered mb-0">
                             <thead>
                             <tr>
-                                <th>Event</th>
-                                <th>Company Name</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
+                                <th>Title</th>
                                 <th>Active</th>
                                 <th>Display Order</th>
                                 <th>Action</th>
@@ -32,12 +29,24 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td>Event 1</td>
-                                <td>Company 1</td>
-                                <td>12/09/2023 12:00 PM</td>
-                                <td>12/09/2023 05:00 PM</td>
+                                <td class="table-user">
+                                    Sponsor Type 1
+                                </td>
                                 <td>Yes</td>
                                 <td>1</td>
+                                <td>
+                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
+                                            class="ri-edit-2-line"></i></a>
+                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
+                                            class="ri-delete-bin-2-line"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table-user">
+                                    Sponsor Type 2
+                                </td>
+                                <td>Yes</td>
+                                <td>2</td>
                                 <td>
                                     <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
                                             class="ri-edit-2-line"></i></a>

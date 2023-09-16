@@ -10,6 +10,12 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="mb-3">
+                                    <label for="simpleinput" class="form-label">Event Name</label>
+                                    <input type="text" class="form-control" placeholder="Event Name">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
                                     <label for="example-select" class="form-label">Company</label>
                                     <select class="form-select" id="example-select">
                                         <option>--SELECT--</option>
@@ -18,12 +24,6 @@
                                         <option>Company 3</option>
                                         <option>Company 4</option>
                                     </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label for="simpleinput" class="form-label">Event Name</label>
-                                    <input type="text" class="form-control" placeholder="Event Name">
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -44,12 +44,6 @@
                                     <label for="End-date" class="form-label">End Date</label>
                                     <input class="form-control" id="End-date" type="date"
                                            name="date">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Order No</label>
-                                    <input type="text" class="form-control" placeholder="Order No">
                                 </div>
                             </div>
                             <hr>
