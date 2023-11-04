@@ -16,3 +16,4 @@
     </div>
 </div>
 <!-- end page title -->
+@include('global.flash_messages')

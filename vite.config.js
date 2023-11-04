@@ -54,6 +54,8 @@ export default defineConfig({
                 'resources/js/pages/responsive-table.init.js',
                 'resources/js/pages/google-maps.init.js',
                 'resources/js/pages/vector-maps.init.js',
+
+                'resources/js/modules/global.init.js',
             ],
             refresh: true,
         }),

@@ -1,8 +1,6 @@
 @extends('layouts.vertical', ['title' => 'Sponsor Types', 'mode' => $mode ?? '', 'demo' => $demo ?? ''])
-
 @section('css')
 @endsection
-
 @section('content')
     @include('layouts.shared/page-title',['page_title' => 'Sponsor Types'])
     <div class="row">
@@ -28,41 +26,42 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="table-user">
-                                    Sponsor Type 1
-                                </td>
-                                <td>Yes</td>
-                                <td>1</td>
-                                <td>
-                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
-                                            class="ri-edit-2-line"></i></a>
-                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
-                                            class="ri-delete-bin-2-line"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="table-user">
-                                    Sponsor Type 2
-                                </td>
-                                <td>Yes</td>
-                                <td>2</td>
-                                <td>
-                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
-                                            class="ri-edit-2-line"></i></a>
-                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
-                                            class="ri-delete-bin-2-line"></i></a>
-                                </td>
-                            </tr>
+                            @forelse($records as $item)
+                                <tr>
+                                    <td class="table-user">
+                                        {{ $item->title }}
+                                    </td>
+                                    <td>{{ $item->is_active ? "Yes" : "No" }}</td>
+                                    <td>
+                                        <input class="displayOrder form-control" type="number" min="0"
+                                               data-record_id="{{ $item->sponsor_type_id }}" data-action_url="{{ route('sponsor_types.update_order') }}"
+                                               value="{{ $item->display_order }}" style="width: 20% !important;">
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('sponsor_types.edit', $item->sponsor_type_id) }}"
+                                           class="text-reset fs-16 px-1"> <i
+                                                class="ri-edit-2-line"></i></a>
+                                        <a href="javascript: void(0);" class="text-reset fs-16 px-1 deleteRecord" data-record_id="{{ $item->sponsor_type_id }}" data-action_url="{{ route('sponsor_types.delete') }}"> <i
+                                                class="ri-delete-bin-2-line"></i></a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr class="text-center">
+                                    <td colspan="4">No Record Found</td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
-                    </div> <!-- end table-responsive-->
-                </div> <!-- end card body-->
+                        @if(count($records) > 0)
+                            {!! $records->links() !!}
+                        @endif
+                    </div>
+                </div>
             </div>
-        </div> <!-- end col -->
-    </div> <!-- end row -->
+        </div>
+    </div>
 @endsection
 
 @section('script')
-    @vite(['resources/js/pages/tabledit.init.js'])
+    @vite(['resources/js/modules/global.init.js'])
 @endsection
