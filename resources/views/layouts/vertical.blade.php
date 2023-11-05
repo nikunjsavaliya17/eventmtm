@@ -38,7 +38,7 @@
 
     @include('layouts.shared/footer-scripts')
 
-    @vite(['resources/js/layout.js', 'resources/js/main.js'])
+    @vite(['resources/js/layout.js', 'resources/js/main.js', 'resources/js/modules/global.init.js'])
 
 </body>
 

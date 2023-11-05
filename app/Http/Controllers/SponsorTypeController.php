@@ -48,8 +48,8 @@ class SponsorTypeController extends Controller
     public function update_order(Request $request)
     {
         $requestData = $request->except('_token');
-//        $record = SponsorType::findOrFail($requestData['record_id']);
-//        $record->update(['display_order' => $requestData['display_order']]);
+        $record = SponsorType::findOrFail($requestData['record_id']);
+        $record->update(['display_order' => $requestData['display_order']]);
         return response()->json(['status' => true]);
     }
 

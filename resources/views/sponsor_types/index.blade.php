@@ -63,5 +63,4 @@
 @endsection
 
 @section('script')
-    @vite(['resources/js/modules/global.init.js'])
 @endsection

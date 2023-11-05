@@ -24,71 +24,45 @@
                                 <th>Company Name</th>
                                 <th>Email</th>
                                 <th>Mobile No</th>
+                                <th>Active</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="table-user">
-                                    Company 1
-                                </td>
-                                <td>test@gmail.com</td>
-                                <td>9998884477</td>
-                                <td>
-                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
-                                            class="ri-edit-2-line"></i></a>
-                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
-                                            class="ri-delete-bin-2-line"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="table-user">
-                                    Company 2
-                                </td>
-                                <td>test1@gmail.com</td>
-                                <td>9998884477</td>
-                                <td>
-                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
-                                            class="ri-edit-2-line"></i></a>
-                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
-                                            class="ri-delete-bin-2-line"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="table-user">
-                                    Company 3
-                                </td>
-                                <td>test2@gmail.com</td>
-                                <td>9998884477</td>
-                                <td>
-                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
-                                            class="ri-edit-2-line"></i></a>
-                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
-                                            class="ri-delete-bin-2-line"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="table-user">
-                                    Company 4
-                                </td>
-                                <td>test3@gmail.com</td>
-                                <td>9998884477</td>
-                                <td>
-                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
-                                            class="ri-edit-2-line"></i></a>
-                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
-                                            class="ri-delete-bin-2-line"></i></a>
-                                </td>
-                            </tr>
+                            @forelse($records as $item)
+                                <tr>
+                                    <td class="table-user">
+                                        {{ $item->title }}
+                                    </td>
+                                    <td>{{ $item->email }}</td>
+                                    <td>{{ $item->phone_number }}</td>
+                                    <td>{{ $item->is_active ? "Yes" : "No" }}</td>
+                                    <td>
+                                        <a href="{{ route('event_company_management.edit', $item->event_company_id) }}"
+                                           class="text-reset fs-16 px-1"> <i
+                                                class="ri-edit-2-line"></i></a>
+                                        <a href="javascript: void(0);" class="text-reset fs-16 px-1 deleteRecord"
+                                           data-record_id="{{ $item->event_company_id }}"
+                                           data-action_url="{{ route('event_company_management.delete') }}"> <i
+                                                class="ri-delete-bin-2-line"></i></a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr class="text-center">
+                                    <td colspan="5">No Record Found</td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
-                    </div> <!-- end table-responsive-->
-                </div> <!-- end card body-->
+                        @if(count($records) > 0)
+                            {!! $records->links() !!}
+                        @endif
+                    </div>
+                </div>
             </div>
-        </div> <!-- end col -->
-    </div> <!-- end row -->
+        </div>
+    </div>
 @endsection
 
 @section('script')
-    @vite(['resources/js/pages/tabledit.init.js'])
 @endsection
