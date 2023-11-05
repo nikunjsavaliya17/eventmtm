@@ -33,6 +33,7 @@ class SponsorController extends Controller
         if ($request->filled('update_id')) {
             $validateArr['company_name'] .= ',' . $request->filled('update_id') . ',sponsor_id';
         }
+        $this->validate($request, $validateArr);
         $requestData = $request->except('_token');
         $requestData['is_active'] = isset($requestData['is_active']) ? 1 : 0;
         if (isset($requestData['update_id'])) {
