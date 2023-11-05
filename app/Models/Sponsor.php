@@ -15,4 +15,9 @@ class Sponsor extends Model
     protected $primaryKey = "sponsor_id";
 
     protected $guarded = ["sponsor_id"];
+
+    public function typeDetail()
+    {
+        return $this->hasOne(SponsorType::class, 'sponsor_type_id', 'sponsor_type_id');
+    }
 }

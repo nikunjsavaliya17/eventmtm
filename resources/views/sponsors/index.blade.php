@@ -36,10 +36,10 @@
                                     <td>
                                         <strong>Name</strong>     : {{ $item->contact_name }}<br>
                                         <strong>Email</strong>    : {{ $item->email }}<br>
-                                        <strong>Mobile No</strong>: {{ $item->mobile_number }}<br>
+                                        <strong>Mobile No</strong>: {{ $item->mobile_number }}
                                     </td>
                                     <td>
-                                        Test Company
+                                        {{ $item->typeDetail->title ?? "---" }}
                                     </td>
                                     <td>{{ $item->is_active ? "Yes" : "No" }}</td>
                                     <td>
@@ -50,7 +50,7 @@
                                     <td>
                                         <a href="{{ route('sponsors.edit', $item->sponsor_id) }}" class="text-reset fs-16 px-1"> <i
                                                 class="ri-edit-2-line"></i></a>
-                                        <a href="javascript: void(0);" class="text-reset fs-16 px-1deleteRecord" data-record_id="{{ $item->sponsor_id }}" data-action_url="{{ route('sponsors.delete') }}"> <i
+                                        <a href="javascript: void(0);" class="text-reset fs-16 px-1 deleteRecord" data-record_id="{{ $item->sponsor_id }}" data-action_url="{{ route('sponsors.delete') }}"> <i
                                                 class="ri-delete-bin-2-line"></i></a>
                                     </td>
                                 </tr>

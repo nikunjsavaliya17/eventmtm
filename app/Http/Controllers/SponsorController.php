@@ -10,7 +10,7 @@ class SponsorController extends Controller
 {
     public function index()
     {
-        $records = Sponsor::query()->paginate(25);
+        $records = Sponsor::query()->with(['typeDetail'])->paginate(25);
         return view('sponsors.index', compact('records'));
     }
 
@@ -36,6 +36,9 @@ class SponsorController extends Controller
         $this->validate($request, $validateArr);
         $requestData = $request->except('_token');
         $requestData['is_active'] = isset($requestData['is_active']) ? 1 : 0;
+        if (isset($requestData['logo'])){
+            $requestData['logo'] = uploadFile($requestData['logo'], 'sponsor');
+        }
         if (isset($requestData['update_id'])) {
             $item = Sponsor::where('sponsor_id', $requestData['update_id'])->first();
             unset($requestData['update_id']);

@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-body">
                     <form action="{{ route('sponsors.store_update') }}" method="POST" class="needs-validation"
-                          novalidate>
+                          novalidate enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             @if(isset($sponsor))
@@ -39,7 +39,7 @@
                             <div class="col-lg-6">
                                 <div class="mb-3">
                                     <label class="form-label">Logo</label>
-                                    <input type="file" class="form-control">
+                                    <input type="file" name="logo" class="form-control">
                                 </div>
                             </div>
                             <div class="col-lg-6">

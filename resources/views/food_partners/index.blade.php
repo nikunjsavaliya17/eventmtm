@@ -28,26 +28,35 @@
                             </tr>
                             </thead>
                             <tbody>
+                            @forelse($records as $item)
                             <tr>
                                 <td class="table-user">
                                     <img src="{{ asset('images/users/avatar-2.jpg') }}" alt="table-user" class="me-2 rounded-circle">
-                                    Food Company 1
+                                    {{ $item->company_name }}
                                 </td>
                                 <td>
-                                    <strong>Name:</strong> Test Name <br>
-                                    <strong>Email:</strong> test@gmail.com <br>
-                                    <strong>Phone No:</strong> 7845124578
+                                    <strong>Name</strong>     : {{ $item->contact_name }}<br>
+                                    <strong>Email</strong>    : {{ $item->contact_email }}<br>
+                                    <strong>Mobile No</strong>: {{ $item->contact_phone_number }}
                                 </td>
-                                <td>Yes</td>
+                                <td>{{ $item->is_active ? "Yes" : "No" }}</td>
                                 <td>
-                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
+                                    <a href="{{ route('food_partners.edit', $item->food_partner_id) }}" class="text-reset fs-16 px-1"> <i
                                             class="ri-edit-2-line"></i></a>
-                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
+                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1 deleteRecord" data-record_id="{{ $item->food_partner_id }}" data-action_url="{{ route('food_partners.delete') }}"> <i
                                             class="ri-delete-bin-2-line"></i></a>
                                 </td>
                             </tr>
+                            @empty
+                                <tr class="text-center">
+                                    <td colspan="7">No Record Found</td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
+                        @if(count($records) > 0)
+                            {!! $records->links() !!}
+                        @endif
                     </div> <!-- end table-responsive-->
                 </div> <!-- end card body-->
             </div>
@@ -56,5 +65,4 @@
 @endsection
 
 @section('script')
-    @vite(['resources/js/pages/tabledit.init.js'])
 @endsection
