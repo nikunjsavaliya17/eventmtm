@@ -21,9 +21,12 @@ class SponsorTypeController extends Controller
 
     public function store_update(Request $request)
     {
-        $this->validate($request, [
-            'title' => 'required'
-        ]);
+        $validateArr = [
+            'title' => 'required|unique:food_types,title',
+        ];
+        if ($request->filled('update_id')) {
+            $validateArr['title'] .= ',' . $request->filled('update_id') . ',sponsor_type_id';
+        }
         $requestData = $request->except('_token');
         $requestData['is_active'] = isset($requestData['is_active']) ? 1 : 0;
         if (isset($requestData['update_id'])) {
