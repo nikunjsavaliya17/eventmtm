@@ -15,4 +15,9 @@ class FoodPartnerEvent extends Model
     protected $primaryKey = "food_partner_event_id";
 
     protected $guarded = ["food_partner_event_id"];
+
+    public function foodPartnerDetail()
+    {
+        return $this->hasOne(FoodPartner::class, 'food_partner_id', 'food_partner_id');
+    }
 }

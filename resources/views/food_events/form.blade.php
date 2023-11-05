@@ -1,26 +1,51 @@
-@extends('layouts.vertical', ['title' => 'Sponsorship Management', 'mode' => $mode ?? '', 'demo' => $demo ?? ''])
+@extends('layouts.vertical', ['title' => 'Food Events', 'mode' => $mode ?? '', 'demo' => $demo ?? ''])
 
 @section('content')
-    @include('layouts.shared/page-title', ['page_title' => 'Add', 'sub_title' => 'Sponsorship Management'])
+    @include('layouts.shared/page-title', ['page_title' => $formMode, 'sub_title' => 'Food Events'])
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form>
+                    <form action="{{ route('food_events.store_update') }}" method="POST" class="needs-validation"
+                          novalidate>
+                        @csrf
                         <div class="row">
-                            <div class="col-lg-6">
+                            @if(isset($foodEvent))
+                                <input type="hidden" name="update_id" value="{{ $foodEvent->food_partner_event_id }}">
+                            @endif
+                            <div class="col-lg-6 col-12">
                                 <div class="mb-3">
-                                    <label class="form-label">Event Name</label>
-                                    <input type="text" class="form-control" placeholder="Event Name">
+                                    <label for="title" class="form-label">Event Title</label>
+                                    <input type="text" id="title" name="title" class="form-control"
+                                           value="{{ $foodEvent->title ?? old('title') }}" placeholder="Title"
+                                           required>
+                                    <div class="invalid-feedback">
+                                        Please enter a title.
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 col-12">
                                 <div class="mb-3">
-                                    <label for="example-select" class="form-label">Food Partner</label>
-                                    <select class="form-select" id="example-select">
-                                        <option>--SELECT--</option>
-                                        <option>Food Company 1</option>
+                                    <label for="food_partner_id" class="form-label"> Food Partner</label>
+                                    <select class="form-select" id="food_partner_id" name="food_partner_id" required>
+                                        <option value="">--SELECT--</option>
+                                        @foreach($foodPartners as $food_partner_id => $food_partner)
+                                            <option value="{{ $food_partner_id }}"
+                                                    @if(isset($foodEvent) && ($foodEvent->food_partner_id == $food_partner_id)) selected @endif>{{ $food_partner }}</option>
+                                        @endforeach
                                     </select>
+                                    <div class="invalid-feedback">
+                                        Please select a food partner.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" name="is_active" id="is_active"
+                                               @if(isset($foodEvent) && $foodEvent->is_active) checked @endif>
+                                        <label class="form-check-label form-label" for="is_active">Is Active</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
