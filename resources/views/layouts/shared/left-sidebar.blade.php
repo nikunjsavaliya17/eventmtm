@@ -68,7 +68,7 @@
                             <a href="{{ route('sponsor_types.index') }}">Types</a>
                         </li>
                         <li>
-                            <a href="{{ route('sponsorship_management.index') }}">Sponsorship Management</a>
+                            <a href="{{ route('sponsors.index') }}">Sponsors</a>
                         </li>
                     </ul>
                 </div>

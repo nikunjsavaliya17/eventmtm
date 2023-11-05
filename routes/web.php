@@ -11,7 +11,7 @@ use App\Http\Controllers\FoodMenuController;
 use App\Http\Controllers\FoodPartnerController;
 use App\Http\Controllers\FoodTypeController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\SponsorshipManagementController;
+use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\SponsorTypeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoutingController;
@@ -85,10 +85,14 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
         });
     });
 
-    Route::group(['prefix' => '/sponsorship-management', 'as' => 'sponsorship_management.'], function () {
-        Route::controller(SponsorshipManagementController::class)->group(function () {
+    Route::group(['prefix' => '/sponsors', 'as' => 'sponsors.'], function () {
+        Route::controller(SponsorController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/add', 'add')->name('add');
+            Route::get('/edit/{id}', 'edit')->name('edit');
+            Route::post('/store-update', 'store_update')->name('store_update');
+            Route::post('/update-order', 'update_order')->name('update_order');
+            Route::post('/delete', 'delete')->name('delete');
         });
     });
 
