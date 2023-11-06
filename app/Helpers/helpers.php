@@ -18,7 +18,7 @@ function uploadFile($file, $path, $exist_file = null)
         @unlink($imagePath);
     }
     $extension = $file->getClientOriginalExtension();
-    $fileName = rand(11111, 99999) . '.' . $extension;
+    $fileName = rand(11111, 99999) . time() . '.' . $extension;
     if (!file_exists($uploadPath)) {
         mkdir($uploadPath, 666, true);
     }

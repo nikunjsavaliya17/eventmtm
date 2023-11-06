@@ -30,24 +30,40 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="table-user">
-                                    <img src="{{ asset('images/users/avatar-2.jpg') }}" alt="table-user" class="me-2 rounded-circle">
-                                    Item 1
-                                </td>
-                                <td>Food Type 1</td>
-                                <td>10</td>
-                                <td>Yes</td>
-                                <td>1</td>
-                                <td>
-                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
-                                            class="ri-edit-2-line"></i></a>
-                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
-                                            class="ri-delete-bin-2-line"></i></a>
-                                </td>
-                            </tr>
+                            @forelse($records as $item)
+                                <tr>
+                                    <td>
+                                        {{ $item->title }}
+                                    </td>
+                                    <td>{{ $item->typeDetail->title ?? "---" }}</td>
+                                    <td>{{ $item->sku }}</td>
+                                    <td>{{ $item->is_active ? "Yes" : "No" }}</td>
+                                    <td>
+                                        <input class="displayOrder form-control" type="number" min="0"
+                                               data-record_id="{{ $item->food_menu_id }}"
+                                               data-action_url="{{ route('food_menu.update_order') }}"
+                                               value="{{ $item->display_order }}" style="width: 20% !important;">
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('food_menu.edit', $item->food_menu_id) }}"
+                                           class="text-reset fs-16 px-1"> <i
+                                                class="ri-edit-2-line"></i></a>
+                                        <a href="javascript: void(0);" class="text-reset fs-16 px-1 deleteRecord"
+                                           data-record_id="{{ $item->food_menu_id }}"
+                                           data-action_url="{{ route('food_menu.delete') }}"> <i
+                                                class="ri-delete-bin-2-line"></i></a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr class="text-center">
+                                    <td colspan="7">No Record Found</td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
+                        @if(count($records) > 0)
+                            {!! $records->links() !!}
+                        @endif
                     </div> <!-- end table-responsive-->
                 </div> <!-- end card body-->
             </div>
@@ -56,5 +72,4 @@
 @endsection
 
 @section('script')
-    @vite(['resources/js/pages/tabledit.init.js'])
 @endsection

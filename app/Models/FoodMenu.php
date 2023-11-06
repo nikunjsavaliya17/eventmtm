@@ -15,4 +15,9 @@ class FoodMenu extends Model
     protected $primaryKey = "food_menu_id";
 
     protected $guarded = ["food_menu_id"];
+
+    public function typeDetail()
+    {
+        return $this->hasOne(FoodType::class, 'food_type_id', 'food_type_id')->withTrashed();
+    }
 }

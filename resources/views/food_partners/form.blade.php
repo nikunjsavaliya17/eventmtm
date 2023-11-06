@@ -28,6 +28,9 @@
                                 <div class="mb-3">
                                     <label class="form-label">Logo</label>
                                     <input type="file" name="logo" class="form-control">
+                                    @if(isset($foodPartner) && isset($foodPartner->logo))
+                                        <img src="{{ getFileUrl($foodPartner->logo, 'food_partner') }}" alt="{{ $foodPartner->logo }}" width="200px">
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-lg-4 col-12">

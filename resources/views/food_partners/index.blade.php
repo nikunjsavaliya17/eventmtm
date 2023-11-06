@@ -30,8 +30,7 @@
                             <tbody>
                             @forelse($records as $item)
                             <tr>
-                                <td class="table-user">
-                                    <img src="{{ asset('images/users/avatar-2.jpg') }}" alt="table-user" class="me-2 rounded-circle">
+                                <td>
                                     {{ $item->company_name }}
                                 </td>
                                 <td>
