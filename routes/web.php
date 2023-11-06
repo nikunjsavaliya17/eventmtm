@@ -150,6 +150,9 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
         Route::controller(AdminUserController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/add', 'add')->name('add');
+            Route::get('/edit/{id}', 'edit')->name('edit');
+            Route::post('/store-update', 'store_update')->name('store_update');
+            Route::post('/delete', 'delete')->name('delete');
         });
     });
 

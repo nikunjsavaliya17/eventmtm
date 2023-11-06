@@ -121,9 +121,9 @@
                                         <div class="input-group-text" data-password="false">
                                             <span class="password-eye"></span>
                                         </div>
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        Please enter a password.
+                                        <div class="invalid-feedback">
+                                            Please enter a password.
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -28,23 +28,29 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($users as $item)
-                            <tr>
-                                <td>
-                                    {{ $item->name }}
-                                </td>
-                                <td>{{ $item->email }}</td>
-                                <td>Yes</td>
-                                <td>
-                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
-                                            class="ri-edit-2-line"></i></a>
-                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
-                                            class="ri-delete-bin-2-line"></i></a>
-                                </td>
-                            </tr>
-                            @endforeach
+                            @forelse($records as $item)
+                                <tr>
+                                    <td>
+                                        {{ $item->name }}
+                                    </td>
+                                    <td>{{ $item->email }}</td>
+                                    <td>{{ "Yes" }}</td>
+                                    <td>
+                                        <a href="{{ route('admin_users.edit', $item->id) }}"
+                                           class="text-reset fs-16 px-1"> <i
+                                                class="ri-edit-2-line"></i></a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr class="text-center">
+                                    <td colspan="4">No Record Found</td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
+                        @if(count($records) > 0)
+                            {!! $records->links() !!}
+                        @endif
                     </div>
                 </div>
             </div>
@@ -53,5 +59,4 @@
 @endsection
 
 @section('script')
-    @vite(['resources/js/pages/tabledit.init.js'])
 @endsection
