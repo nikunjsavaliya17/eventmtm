@@ -17,6 +17,7 @@ class CreateCustomDirectories extends Command
     'app/public/sponsor' => 'sponsor',
     'app/public/food_partner' => 'food_partner',
     'app/public/food_menu' => 'food_menu',
+    'app/public/event' => 'event',
 ];
 
     protected $signature = 'create:uploadable_directories';

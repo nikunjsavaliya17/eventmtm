@@ -26,27 +26,34 @@
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Active</th>
-                                <th>Display Order</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>Event 1</td>
-                                <td>Company 1</td>
-                                <td>12/09/2023 12:00 PM</td>
-                                <td>12/09/2023 05:00 PM</td>
-                                <td>Yes</td>
-                                <td>1</td>
-                                <td>
-                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
-                                            class="ri-edit-2-line"></i></a>
-                                    <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
-                                            class="ri-delete-bin-2-line"></i></a>
-                                </td>
-                            </tr>
+                            @forelse($records as $item)
+                                <tr>
+                                    <td>{{ $item->title }}</td>
+                                    <td>{{ $item->eventCompanyDetail->title ?? "---" }}</td>
+                                    <td>{{ formatDate($item->start_date) }}</td>
+                                    <td>{{ formatDate($item->end_date) }}</td>
+                                    <td>{{ $item->is_active ? "Yes" : "No" }}</td>
+                                    <td>
+                                        <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
+                                                class="ri-edit-2-line"></i></a>
+                                        <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
+                                                class="ri-delete-bin-2-line"></i></a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr class="text-center">
+                                    <td colspan="5">No Record Found</td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
+                        @if(count($records) > 0)
+                            {!! $records->links() !!}
+                        @endif
                     </div> <!-- end table-responsive-->
                 </div> <!-- end card body-->
             </div>
@@ -55,5 +62,4 @@
 @endsection
 
 @section('script')
-    @vite(['resources/js/pages/tabledit.init.js'])
 @endsection

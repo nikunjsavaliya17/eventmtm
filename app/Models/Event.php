@@ -15,4 +15,9 @@ class Event extends Model
     protected $primaryKey = "event_id";
 
     protected $guarded = ["event_id"];
+
+    public function eventCompanyDetail()
+    {
+        return $this->hasOne(EventCompany::class, 'event_company_id', 'event_company_id');
+    }
 }
