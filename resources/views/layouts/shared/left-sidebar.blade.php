@@ -1,7 +1,8 @@
 <!-- ========== Left Sidebar Start ========== -->
 <div class="leftside-menu">
+@php $user = auth()->user(); @endphp
 
-    <!-- Brand Logo Light -->
+<!-- Brand Logo Light -->
     <a href="{{ route('home') }}" class="logo logo-light">
         <span class="logo-lg">
             <img src="{{ asset('images/logo.png') }}" alt="logo">
@@ -31,85 +32,111 @@
             <li class="side-nav-item">
                 <a href="{{ route('home') }}" class="side-nav-link">
                     <i class="ri-dashboard-3-line"></i>
-{{--                    <span class="badge bg-success float-end">9+</span>--}}
+                    {{--                    <span class="badge bg-success float-end">9+</span>--}}
                     <span> Dashboard </span>
                 </a>
             </li>
-
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#eventManagementPages" aria-expanded="false" aria-controls="eventManagementPages"
-                   class="side-nav-link">
-                    <i class="ri-calendar-event-line"></i>
-                    <span> Event Management </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="eventManagementPages">
-                    <ul class="side-nav-second-level">
-                        <li>
-                            <a href="{{ route('event_company_management.index') }}">Company Management</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('event_management.index') }}">Event Management</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sponsorManagementPages" aria-expanded="false" aria-controls="eventManagementPages"
-                   class="side-nav-link">
-                    <i class="ri-file-user-line"></i>
-                    <span> Sponsor Management </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sponsorManagementPages">
-                    <ul class="side-nav-second-level">
-                        <li>
-                            <a href="{{ route('sponsor_types.index') }}">Types</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('sponsors.index') }}">Sponsors</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#foodManagementPages" aria-expanded="false" aria-controls="eventManagementPages"
-                   class="side-nav-link">
-                    <i class="ri-pages-line"></i>
-                    <span> Food Management </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="foodManagementPages">
-                    <ul class="side-nav-second-level">
-                        <li>
-                            <a href="{{ route('food_partners.index') }}">Partners</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('food_events.index') }}">Events</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('food_types.index') }}">Types</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('food_menu.index') }}">Menu</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="side-nav-item">
-                <a href="{{ route('orders.index') }}" class="side-nav-link">
-                    <i class="ri-list-unordered"></i>
-                    <span> Orders </span>
-                </a>
-            </li>
-            <li class="side-nav-item">
-                <a href="{{ route('admin_users.index') }}" class="side-nav-link">
-                    <i class="ri-contacts-line"></i>
-                    <span> Admin Users </span>
-                </a>
-            </li>
+            @if($user->can('event-company-read') || $user->can('event-read'))
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#eventManagementPages" aria-expanded="false"
+                       aria-controls="eventManagementPages"
+                       class="side-nav-link">
+                        <i class="ri-calendar-event-line"></i>
+                        <span> Event Management </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="eventManagementPages">
+                        <ul class="side-nav-second-level">
+                            @if($user->can('event-company-read'))
+                                <li>
+                                    <a href="{{ route('event_company_management.index') }}">Companies</a>
+                                </li>
+                            @endif
+                            @if($user->can('event-read'))
+                                <li>
+                                    <a href="{{ route('event_management.index') }}">Events</a>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
+                </li>
+            @endif
+            @if($user->can('sponsor-type-read') || $user->can('sponsor-read'))
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sponsorManagementPages" aria-expanded="false"
+                       aria-controls="eventManagementPages"
+                       class="side-nav-link">
+                        <i class="ri-file-user-line"></i>
+                        <span> Sponsor Management </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sponsorManagementPages">
+                        <ul class="side-nav-second-level">
+                            @if($user->can('sponsor-type-read'))
+                                <li>
+                                    <a href="{{ route('sponsor_types.index') }}">Types</a>
+                                </li>
+                            @endif
+                            @if($user->can('sponsor-read'))
+                                <li>
+                                    <a href="{{ route('sponsors.index') }}">Sponsors</a>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
+                </li>
+            @endif
+            @if($user->can('food-partner-read') || $user->can('food-event-read') || $user->can('food-type-read') || $user->can('food-menu-read'))
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#foodManagementPages" aria-expanded="false"
+                       aria-controls="eventManagementPages"
+                       class="side-nav-link">
+                        <i class="ri-pages-line"></i>
+                        <span> Food Management </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="foodManagementPages">
+                        <ul class="side-nav-second-level">
+                            @if($user->can('food-partner-read'))
+                                <li>
+                                    <a href="{{ route('food_partners.index') }}">Partners</a>
+                                </li>
+                            @endif
+                            @if($user->can('food-event-read'))
+                                <li>
+                                    <a href="{{ route('food_events.index') }}">Events</a>
+                                </li>
+                            @endif
+                            @if($user->can('food-type-read'))
+                                <li>
+                                    <a href="{{ route('food_types.index') }}">Types</a>
+                                </li>
+                            @endif
+                            @if($user->can('food-menu-read'))
+                                <li>
+                                    <a href="{{ route('food_menu.index') }}">Menu</a>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
+                </li>
+            @endif
+            @if($user->can('order-read'))
+                <li class="side-nav-item">
+                    <a href="{{ route('orders.index') }}" class="side-nav-link">
+                        <i class="ri-list-unordered"></i>
+                        <span> Orders </span>
+                    </a>
+                </li>
+            @endif
+            @if($user->can('admin-user-read'))
+                <li class="side-nav-item">
+                    <a href="{{ route('admin_users.index') }}" class="side-nav-link">
+                        <i class="ri-contacts-line"></i>
+                        <span> Admin Users </span>
+                    </a>
+                </li>
+            @endif
             {{--<li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarPages" aria-expanded="false" aria-controls="sidebarPages"
                    class="side-nav-link">

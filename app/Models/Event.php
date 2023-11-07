@@ -18,6 +18,6 @@ class Event extends Model
 
     public function eventCompanyDetail()
     {
-        return $this->hasOne(EventCompany::class, 'event_company_id', 'event_company_id');
+        return $this->hasOne(EventCompany::class, 'event_company_id', 'event_company_id')->withTrashed();
     }
 }

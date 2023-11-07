@@ -18,6 +18,6 @@ class Sponsor extends Model
 
     public function typeDetail()
     {
-        return $this->hasOne(SponsorType::class, 'sponsor_type_id', 'sponsor_type_id');
+        return $this->hasOne(SponsorType::class, 'sponsor_type_id', 'sponsor_type_id')->withTrashed();
     }
 }

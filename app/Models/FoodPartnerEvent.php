@@ -18,6 +18,6 @@ class FoodPartnerEvent extends Model
 
     public function foodPartnerDetail()
     {
-        return $this->hasOne(FoodPartner::class, 'food_partner_id', 'food_partner_id');
+        return $this->hasOne(FoodPartner::class, 'food_partner_id', 'food_partner_id')->withTrashed();
     }
 }

@@ -57,7 +57,7 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
 
     Route::get('/', fn() => view('index'))->name('home');
 
-    Route::group(['prefix' => '/event-company-management', 'as' => 'event_company_management.'], function () {
+    Route::group(['middleware' => ['canUser:event-company-read'], 'prefix' => '/event-company-management', 'as' => 'event_company_management.'], function () {
         Route::controller(EventCompanyManagementController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/add', 'add')->name('add');
@@ -67,7 +67,7 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
         });
     });
 
-    Route::group(['prefix' => '/event-management', 'as' => 'event_management.'], function () {
+    Route::group(['middleware' => ['canUser:event-read'], 'prefix' => '/event-management', 'as' => 'event_management.'], function () {
         Route::controller(EventManagementController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/add', 'add')->name('add');
