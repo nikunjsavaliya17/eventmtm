@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\EventCompany;
 use Illuminate\Http\Request;
 
 class EventManagementController extends Controller
@@ -16,7 +17,8 @@ class EventManagementController extends Controller
     public function add()
     {
         $formMode = 'Add';
-        return view('event_management.form', compact('formMode'));
+        $companies = EventCompany::pluck('title', 'event_company_id')->toArray();
+        return view('event_management.form', compact('formMode', 'companies'));
     }
 
     public function store_update(Request $request)
@@ -51,7 +53,8 @@ class EventManagementController extends Controller
     {
         $event = Event::findOrFail($id);
         $formMode = 'Edit';
-        return view('event_management.form', compact('event', 'formMode'));
+        $companies = EventCompany::pluck('title', 'event_company_id')->toArray();
+        return view('event_management.form', compact('event', 'formMode', 'companies'));
     }
 
     public function delete(Request $request)

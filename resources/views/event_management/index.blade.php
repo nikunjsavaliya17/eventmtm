@@ -38,15 +38,16 @@
                                     <td>{{ formatDate($item->end_date) }}</td>
                                     <td>{{ $item->is_active ? "Yes" : "No" }}</td>
                                     <td>
-                                        <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
+                                        <a href="{{ route('event_management.edit', $item->event_id) }}" class="text-reset fs-16 px-1"> <i
                                                 class="ri-edit-2-line"></i></a>
-                                        <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i
+                                        <a href="javascript: void(0);" class="text-reset fs-16 px-1 deleteRecord" data-record_id="{{ $item->event_id }}"
+                                           data-action_url="{{ route('event_management.delete') }}"> <i
                                                 class="ri-delete-bin-2-line"></i></a>
                                     </td>
                                 </tr>
                             @empty
                                 <tr class="text-center">
-                                    <td colspan="5">No Record Found</td>
+                                    <td colspan="7">No Record Found</td>
                                 </tr>
                             @endforelse
                             </tbody>
