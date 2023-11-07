@@ -15,6 +15,15 @@
                             @endif
                             <div class="col-lg-6">
                                 <div class="mb-3">
+                                    <label class="form-label">Event Name</label>
+                                    <input type="text" class="form-control" name="event_name" required placeholder="Event Name" value="{{ $sponsor->event_name ?? old('event_name') }}">
+                                    <div class="invalid-feedback">
+                                        Please enter a event name.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
                                     <label class="form-label">Company Name</label>
                                     <input type="text" class="form-control" name="company_name" required placeholder="Company Name" value="{{ $sponsor->company_name ?? old('company_name') }}">
                                     <div class="invalid-feedback">
