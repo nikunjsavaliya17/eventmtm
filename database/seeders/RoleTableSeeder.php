@@ -14,7 +14,7 @@ class RoleTableSeeder extends Seeder
     public function run(): void
     {
         $roles = [
-            'Super Admin', 'Event Admin', 'Food Partner'
+            'Super Admin', 'Event Admin', 'Event User', 'Food Partner', 'Food Partner User'
         ];
         foreach ($roles as $role){
             $roleExist = Role::where('name', $role)->exists();

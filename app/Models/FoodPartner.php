@@ -12,7 +12,14 @@ class FoodPartner extends Model
 
     protected $table = "food_partners";
 
+    const IMG_DIR = 'food_partner';
+
     protected $primaryKey = "food_partner_id";
 
     protected $guarded = ["food_partner_id"];
+
+    public function createdByUser(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(User::class, 'user_id', 'created_by');
+    }
 }

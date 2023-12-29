@@ -1,152 +1,98 @@
-@extends('layouts.vertical', ['title' => 'Food Partners', 'mode' => $mode ?? '', 'demo' => $demo ?? ''])
-
+@extends('layouts.master')
 @section('content')
-    @include('layouts.shared/page-title', ['page_title' => $formMode, 'sub_title' => 'Food Partners'])
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <form action="{{ route('food_partners.store_update') }}" method="POST" class="needs-validation"
-                          novalidate enctype="multipart/form-data">
-                        @csrf
-                        <div class="row">
-                            @if(isset($foodPartner))
-                                <input type="hidden" name="update_id" value="{{ $foodPartner->food_partner_id }}">
-                            @endif
-                            <div class="col-lg-6 col-12">
-                                <div class="mb-3">
-                                    <label class="form-label">Company Name</label>
-                                    <input type="text" class="form-control" name="company_name" required
-                                           placeholder="Company Name"
-                                           value="{{ $foodPartner->company_name ?? old('company_name') }}">
-                                    <div class="invalid-feedback">
-                                        Please enter a company name.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-12">
-                                <div class="mb-3">
-                                    <label class="form-label">Logo</label>
-                                    <input type="file" name="logo" class="form-control">
-                                    @if(isset($foodPartner) && isset($foodPartner->logo))
-                                        <img src="{{ getFileUrl($foodPartner->logo, 'food_partner') }}" alt="{{ $foodPartner->logo }}" width="200px">
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-12">
-                                <div class="mb-3">
-                                    <label class="form-label">Contact Person Name</label>
-                                    <input type="text" class="form-control" placeholder="Name" name="contact_name"
-                                           required value="{{ $foodPartner->contact_name ?? old('contact_name') }}">
-                                    <div class="invalid-feedback">
-                                        Please enter a name.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-12">
-                                <div class="mb-3">
-                                    <label class="form-label">Email</label>
-                                    <input type="email" class="form-control" name="contact_email" placeholder="Email"
-                                           required value="{{ $foodPartner->contact_email ?? old('contact_email') }}">
-                                    <div class="invalid-feedback">
-                                        Please enter a valid email.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-12">
-                                <div class="mb-3">
-                                    <label class="form-label">Phone No</label>
-                                    <input type="number" class="form-control" name="contact_phone_number"
-                                           placeholder="Phone No" required
-                                           value="{{ $foodPartner->contact_phone_number ?? old('contact_phone_number') }}">
-                                    <div class="invalid-feedback">
-                                        Please enter a phone number.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-12">
-                                <div class="mb-3">
-                                    <label for="username" class="form-label">Username</label>
-                                    <input type="text" id="username" name="username" class="form-control"
-                                           placeholder="Username" required
-                                           value="{{ $foodPartner->username ?? old('username') }}">
-                                    <div class="invalid-feedback">
-                                        Please enter a username.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-12">
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">Password</label>
-                                    <div class="input-group input-group-merge">
-                                        <input type="password" id="password" name="password" class="form-control"
-                                               @if($formMode == "Add") required @endif
-                                               placeholder="Enter your password">
-                                        <div class="input-group-text" data-password="false">
-                                            <span class="password-eye"></span>
-                                        </div>
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        Please enter a password.
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="col-lg-6 col-12">
-                                <div class="mb-3">
-                                    <label class="form-label">ABN Number</label>
-                                    <input type="text" class="form-control" name="abn_number"
-                                           placeholder="Enter value"
-                                           value="{{ $foodPartner->abn_number ?? old('abn_number') }}">
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-12">
-                                <div class="mb-3">
-                                    <label class="form-label">BSB Number</label>
-                                    <input type="text" class="form-control" name="bsb_number"
-                                           placeholder="Enter value"
-                                           value="{{ $foodPartner->bsb_number ?? old('bsb_number') }}">
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-12">
-                                <div class="mb-3">
-                                    <label class="form-label">Bank Name</label>
-                                    <input type="text" class="form-control" name="bank_name"
-                                           placeholder="Enter value"
-                                           value="{{ $foodPartner->bank_name ?? old('bank_name') }}">
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-12">
-                                <div class="mb-3">
-                                    <label class="form-label">Bank Account Number</label>
-                                    <input type="text" class="form-control" name="bank_account_number"
-                                           placeholder="Enter value"
-                                           value="{{ $foodPartner->bank_account_number ?? old('bank_account_number') }}">
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-12">
-                                <div class="mb-3">
-                                    <label class="form-label">Account Holder Name</label>
-                                    <input type="text" class="form-control" name="bank_account_holder_name"
-                                           placeholder="Enter value"
-                                           value="{{ $foodPartner->bank_account_holder_name ?? old('bank_account_holder_name') }}">
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="col-lg-12">
-                                <div class="mb-3">
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" name="is_active" id="is_active"
-                                               @if(isset($foodPartner) && $foodPartner->is_active) checked @endif>
-                                        <label class="form-check-label form-label" for="is_active">Is Active</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
+    <div class="card">
+        <div class="card-header border-bottom">
+            <h4 class="card-title">{{ $formMode }} Food Partner</h4>
+            <div class="dt-action-buttons text-end">
+                <div class="dt-buttons d-inline-flex">
+                    <a href="{{ route('food_partners.index') }}" class="dt-button create-new btn btn-warning"
+                       tabindex="0"
+                       aria-controls="DataTables_Table_0"
+                       type="button"><span><i data-feather="arrow-left"></i> Back</span>
+                    </a>
                 </div>
-            </div> <!-- end card-body -->
-        </div> <!-- end card -->
-    </div><!-- end col -->
+            </div>
+        </div>
+        <div class="card-body mt-1">
+            {!! Form::open(['route' => ['food_partners.store_update'], 'id' => 'inputForm', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'files' => true]) !!}
+            <div class="row g-1 mb-1">
+                @if(isset($foodPartner))
+                    <input type="hidden" name="update_id" value="{{ $foodPartner->food_partner_id }}">
+                @endif
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">Company Name</label>
+                    {!! Form::text('company_name', $foodPartner->company_name ?? old('company_name'), ['class' => 'form-control', 'placeholder' => 'Enter name', 'required' => true]) !!}
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">Contact Name</label>
+                    {!! Form::text('contact_name', $foodPartner->contact_name ?? old('contact_name'), ['class' => 'form-control', 'placeholder' => 'Enter name', 'required' => true]) !!}
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">Contact Email</label>
+                    {!! Form::email('contact_email', $foodPartner->contact_email ?? old('contact_email'), ['class' => 'form-control', 'placeholder' => 'Enter email', 'required' => true]) !!}
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">Contact Number</label>
+                    {!! Form::number('contact_phone_number', $foodPartner->contact_phone_number ?? old('contact_phone_number'), ['class' => 'form-control', 'placeholder' => 'Enter number', 'required' => true]) !!}
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">Username</label>
+                    {!! Form::text('username', $foodPartner->username ?? old('username'), ['class' => 'form-control', 'placeholder' => 'Enter username', 'required' => true]) !!}
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">Password</label>
+                    <div class="input-group input-group-merge form-password-toggle">
+                        <input type="password" class="form-control form-control-merge" id="login-password"
+                               name="password" tabindex="2" @if($formMode == "Add") required @endif
+                               placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                               aria-describedby="login-password"/>
+                        <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">ABN Number</label>
+                    {!! Form::text('abn_number', $foodPartner->abn_number ?? old('abn_number'), ['class' => 'form-control', 'placeholder' => 'Enter number', 'required' => true]) !!}
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">BSB Number</label>
+                    {!! Form::text('bsb_number', $foodPartner->bsb_number ?? old('bsb_number'), ['class' => 'form-control', 'placeholder' => 'Enter number', 'required' => true]) !!}
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">Bank Name</label>
+                    {!! Form::text('bank_name', $foodPartner->bank_name ?? old('bank_name'), ['class' => 'form-control', 'placeholder' => 'Enter name', 'required' => true]) !!}
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">Bank Account Number</label>
+                    {!! Form::number('bank_account_number', $foodPartner->bank_account_number ?? old('bank_account_number'), ['class' => 'form-control', 'placeholder' => 'Enter number', 'required' => true]) !!}
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">Bank Account Holder Name</label>
+                    {!! Form::text('bank_account_holder_name', $foodPartner->bank_account_holder_name ?? old('bank_account_holder_name'), ['class' => 'form-control', 'placeholder' => 'Enter name', 'required' => true]) !!}
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">Logo</label>
+                    <input type="file" accept="image/*" class="dropifyImage"
+                           data-allowed-file-extensions="png jpg jpeg" data-show-remove="false"
+                           @if (isset($foodPartner) && $foodPartner->logo != '') data-default-file="{{ getFileUrl($foodPartner->logo, \App\Models\FoodPartner::IMG_DIR) }}" @else required
+                           @endif
+                           name="logo" id="logo">
+                </div>
+            </div>
+            <button class="btn btn-primary waves-effect waves-float waves-light" type="submit">Submit</button>
+            {!! Form::close() !!}
+        </div>
+    </div>
 @endsection
+
+@push('css')
+    <link rel="stylesheet" href="{{ asset('assets/plugins/dropify/css/dropify.css') }}">
+@endpush
+@push('footer_scripts')
+    <script type="text/javascript" src="{{ asset('assets/plugins/dropify/js/dropify.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#inputForm").validate();
+            $('.dropifyImage').dropify();
+        })
+    </script>
+@endpush

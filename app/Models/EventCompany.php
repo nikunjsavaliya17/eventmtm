@@ -15,4 +15,9 @@ class EventCompany extends Model
     protected $primaryKey = "event_company_id";
 
     protected $guarded = ["event_company_id"];
+
+    public function createdByUser(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(User::class, 'user_id', 'created_by');
+    }
 }

@@ -4,13 +4,51 @@ namespace App\Http\Controllers;
 
 use App\Models\EventCompany;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class EventCompanyManagementController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $records = EventCompany::query()->paginate(25);
-        return view('event_company_management.index', compact('records'));
+        $user = auth()->user();
+        if ($request->ajax()) {
+            $data = EventCompany::query()->with(['createdByUser:user_id,name']);
+            if ($request->filled('created_by')) {
+                $data = $data->where('created_by', $request->get('created_by'));
+            }
+            if ($request->filled('is_active')) {
+                $data = $data->where('is_active', $request->get('is_active'));
+            }
+            return DataTables::of($data)
+                ->editColumn('is_active', function ($item) use ($user) {
+                    if ($user->can('event-company-write')) {
+                        $checkedClass = $item->is_active ? 'checked' : '';
+                        $is_publish = '<div class="d-flex flex-column">
+                                            <label class="form-check-label mb-50" for="customSwitch' . $item->event_company_id . '"></label>
+                                            <div class="form-check form-check-primary form-switch">
+                                                <input onClick="javascript:updatePublishStatus(' . $item->event_company_id . ')" name="is_active_' . $item->event_company_id . '" type="checkbox" ' . $checkedClass . ' class="form-check-input" id="customSwitch' . $item->event_company_id . '" />
+                                            </div>
+                                        </div>';
+                    } else {
+                        $value = $item->is_active ? 'Yes' : 'No';
+                        $class = $item->is_active ? 'success' : 'danger';
+                        $is_publish = '<div class="badge badge-light-' . $class . '">' . $value . '</div>';
+                    }
+                    return $is_publish;
+                })
+                ->editColumn('created_at', function ($item) {
+                    return formatDate($item->created_at);
+                })
+                ->editColumn('created_by', function ($item) {
+                    return $item->createdByUser->name ?? "---";
+                })
+                ->addColumn('actions', function ($item) use ($user) {
+                    return view('event_company_management.partials.actions', compact('item', 'user'));
+                })
+                ->rawColumns(['is_active', 'actions'])
+                ->make(true);
+        }
+        return view('event_company_management.index', compact('user'));
     }
 
     public function add()
@@ -32,17 +70,18 @@ class EventCompanyManagementController extends Controller
             'username' => 'required|unique:event_companies,username',
         ];
         if ($request->filled('update_id')) {
-            $validateArr['title'] .= ',' . $request->filled('update_id') . ',event_company_id';
-            $validateArr['email'] .= ',' . $request->filled('update_id') . ',event_company_id';
-            $validateArr['username'] .= ',' . $request->filled('update_id') . ',event_company_id';
+            $validateArr['title'] .= ',' . $request->get('update_id') . ',event_company_id';
+            $validateArr['email'] .= ',' . $request->get('update_id') . ',event_company_id';
+            $validateArr['username'] .= ',' . $request->get('update_id') . ',event_company_id';
         } else {
             $validateArr['password'] = 'required';
         }
         $this->validate($request, $validateArr);
         $requestData = $request->except('_token');
-        $requestData['is_active'] = isset($requestData['is_active']) ? 1 : 0;
         if (isset($requestData['password'])) {
             $requestData['password'] = bcrypt($requestData['password']);
+        } else {
+            unset($requestData['password']);
         }
         if (isset($requestData['update_id'])) {
             $item = EventCompany::where('event_company_id', $requestData['update_id'])->first();
@@ -50,6 +89,8 @@ class EventCompanyManagementController extends Controller
             $item->update($requestData);
             $message = "Data Updated Successfully";
         } else {
+            $requestData['is_active'] = 1;
+            $requestData['created_by'] = auth()->user()->user_id;
             EventCompany::create($requestData);
             $message = "Data Created Successfully";
         }
@@ -61,6 +102,16 @@ class EventCompanyManagementController extends Controller
         $eventCompany = EventCompany::findOrFail($id);
         $formMode = 'Edit';
         return view('event_company_management.form', compact('eventCompany', 'formMode'));
+    }
+
+    public function update_data(Request $request)
+    {
+        $requestData = $request->except('_token');
+        $record = EventCompany::findOrFail($requestData['pk']);
+        if ($request->get('name') == 'is_active') {
+            $record->update(['is_active' => ($record->is_active == 1) ? 0 : 1]);
+        }
+        return response()->json(['status' => true]);
     }
 
     public function delete(Request $request)

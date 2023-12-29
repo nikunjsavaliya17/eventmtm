@@ -20,4 +20,9 @@ class FoodPartnerEvent extends Model
     {
         return $this->hasOne(FoodPartner::class, 'food_partner_id', 'food_partner_id')->withTrashed();
     }
+
+    public function createdByUser(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(User::class, 'user_id', 'created_by');
+    }
 }

@@ -13,13 +13,6 @@ class CreateCustomDirectories extends Command
      *
      * @var string
      */
-    const DIRECTORY_PATH = [
-    'app/public/sponsor' => 'sponsor',
-    'app/public/food_partner' => 'food_partner',
-    'app/public/food_menu' => 'food_menu',
-    'app/public/event' => 'event',
-];
-
     protected $signature = 'create:uploadable_directories';
 
     /**
@@ -47,7 +40,14 @@ class CreateCustomDirectories extends Command
     public function handle()
     {
         # CREATE FOLDER PUBLIC
-        foreach (self::DIRECTORY_PATH as $key => $path) {
+
+            $directories = [
+                'app/public/sponsor' => 'sponsor',
+                'app/public/food_partner' => 'food_partner',
+                'app/public/food_menu' => 'food_menu',
+                'app/public/event' => 'event',
+            ];
+        foreach ($directories as $key => $path) {
             if (!File::isDirectory(storage_path($key))) {
                 Storage::disk('public')->makeDirectory($path);
             }

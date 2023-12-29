@@ -12,6 +12,8 @@ class Event extends Model
 
     protected $table = "events";
 
+    const IMG_DIR = 'event';
+
     protected $primaryKey = "event_id";
 
     protected $guarded = ["event_id"];
@@ -19,5 +21,10 @@ class Event extends Model
     public function eventCompanyDetail()
     {
         return $this->hasOne(EventCompany::class, 'event_company_id', 'event_company_id')->withTrashed();
+    }
+
+    public function createdByUser(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(User::class, 'user_id', 'created_by');
     }
 }

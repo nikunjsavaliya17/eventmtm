@@ -12,6 +12,8 @@ class Sponsor extends Model
 
     protected $table = "sponsors";
 
+    const IMG_DIR = 'sponsor';
+
     protected $primaryKey = "sponsor_id";
 
     protected $guarded = ["sponsor_id"];
@@ -19,5 +21,10 @@ class Sponsor extends Model
     public function typeDetail()
     {
         return $this->hasOne(SponsorType::class, 'sponsor_type_id', 'sponsor_type_id')->withTrashed();
+    }
+
+    public function createdByUser(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(User::class, 'user_id', 'created_by');
     }
 }

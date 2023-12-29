@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('contact_email')->nullable();
             $table->string('contact_phone_number')->nullable();
             $table->boolean('is_active')->default(0)->index();
+            $table->integer('created_by')->default(0)->index();
             $table->timestamps();
             $table->softDeletes();
         });

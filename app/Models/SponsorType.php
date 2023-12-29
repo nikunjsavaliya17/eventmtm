@@ -15,4 +15,9 @@ class SponsorType extends Model
     protected $primaryKey = "sponsor_type_id";
 
     protected $guarded = ["sponsor_type_id"];
+
+    public function createdByUser(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(User::class, 'user_id', 'created_by');
+    }
 }

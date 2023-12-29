@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('event_id')->index();
             $table->integer('media_type')->default(1)->index()->comment("1 => Image, 2 => Video, 3 => Video Url");
             $table->mediumText('media_value')->nullable();
+            $table->integer('created_by')->default(0)->index();
             $table->timestamps();
         });
     }

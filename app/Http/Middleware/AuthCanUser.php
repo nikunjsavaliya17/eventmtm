@@ -19,7 +19,7 @@ class AuthCanUser
         if (auth()->user()->can($permission)) {
             return $next($request);
         } else {
-            return redirect()->route('home')->with('error', 'Invalid Request');
+            return redirect()->route('dashboard')->with('error', 'Invalid Request');
         }
     }
 }
