@@ -14,7 +14,8 @@ class ValidateApiSecretKey
         }
         return response()->json([
             'status' => false,
-            'message' => 'Invalid API Key'
+            'message' => 'Invalid API Key',
+            'data' => null
         ], 403);
     }
 }
