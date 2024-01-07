@@ -46,6 +46,7 @@ class CreateCustomDirectories extends Command
                 'app/public/food_partner' => 'food_partner',
                 'app/public/food_menu' => 'food_menu',
                 'app/public/event' => 'event',
+                'app/public/app_user' => 'app_user',
             ];
         foreach ($directories as $key => $path) {
             if (!File::isDirectory(storage_path($key))) {
