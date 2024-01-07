@@ -21,6 +21,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
     Route::post('forgot-password', 'forgotPassword');
     Route::post('reset-password', 'resetPassword');
+    Route::post('verify-otp', 'verifyOtp');
 });
 
 Route::group(['middleware' => [ValidateUserAccessToken::class]], function () {

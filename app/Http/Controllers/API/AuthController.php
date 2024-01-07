@@ -28,8 +28,9 @@ class AuthController extends Controller
             'email' => $requestData['email'],
             'password' => Hash::make($requestData['password']),
             'mobile_number' => $requestData['mobile_number'],
+            'otp' => 1111,
 //            'access_token' => Str::random(40) . time(),
-            'is_active' => 1,
+            'is_active' => 0,
         ]);
         return response()->json(['status' => true, 'message' => 'Success', 'data' => new AppUserResource($user)], 200);
     }
@@ -43,9 +44,13 @@ class AuthController extends Controller
         $requestData = $request->all();
         if (Auth::guard('api')->attempt(['email' => $requestData['email'], "password" => $requestData['password']])) {
             $user = Auth::guard('api')->user();
-            $user->access_token = Str::random(40) . time();
-            $user->save();
-            return response()->json(['status' => true, 'message' => 'Success', 'data' => new AppUserResource($user)], 200);
+            if ($user->is_active == 1) {
+                $user->access_token = Str::random(40) . time();
+                $user->save();
+                return response()->json(['status' => true, 'message' => 'Success', 'data' => new AppUserResource($user)], 200);
+            } else {
+                return response()->json(['status' => false, 'message' => 'You not activated your account.', 'data' => null], 500);
+            }
         }
         return response()->json(['status' => false, 'message' => 'Invalid Credentials', 'data' => null], 500);
     }
@@ -74,6 +79,25 @@ class AuthController extends Controller
         if (isset($user)) {
             $user->update(['password' => Hash::make($requestData['password'])]);
             return response()->json(['status' => true, 'message' => 'Success', 'data' => null], 200);
+        }
+        return response()->json(['status' => false, 'message' => 'Invalid User', 'data' => null], 500);
+    }
+
+    public function verifyOtp(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $this->validateAPIRequest($request, [
+            'app_user_id' => 'required|numeric',
+            'otp' => 'required|numeric|digits:4',
+        ]);
+        $requestData = $request->all();
+        $user = AppUser::where('app_user_id', $requestData['app_user_id'])->first();
+        if (isset($user)) {
+            if ($user->otp == $requestData['otp']) {
+                $user->update(['is_active' => 1, 'otp' => null]);
+                return response()->json(['status' => true, 'message' => 'Success', 'data' => new AppUserResource($user)], 200);
+            } else {
+                return response()->json(['status' => false, 'message' => 'Invalid OTP', 'data' => null], 500);
+            }
         }
         return response()->json(['status' => false, 'message' => 'Invalid User', 'data' => null], 500);
     }
