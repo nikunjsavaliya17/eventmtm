@@ -7,7 +7,7 @@
                                             href="{{ route('dashboard') }}">
                     <span
                             class="brand-logo">
-                        <img src="{{ url('assets/images/favicon.png') }}" alt="Logo" height="30">
+                        <img src="{{ asset('assets/images/favicon.png') }}" alt="Logo" height="30">
                             </span>
                     <h2 class="brand-text">{{ config('app.name') }}</h2>
                 </a></li>

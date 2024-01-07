@@ -6,7 +6,7 @@
             <div class="card mb-0">
                 <div class="card-body">
                     <a href="#" class="brand-logo">
-                        <img src="{{ url('assets/images/favicon.png') }}" alt="Logo" height="28">
+                        <img src="{{ asset('assets/images/favicon.png') }}" alt="Logo" height="28">
                         <h2 class="brand-text text-primary ms-1">{{ config('app.name') }}</h2>
                     </a>
 

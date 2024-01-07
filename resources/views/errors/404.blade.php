@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
     <meta name="author" content="BrandSpot">
     <title>Page Not Found - BrandSpot</title>
-    <link rel="shortcut icon" type="image/x-icon" href="{{ url('assets/images/favicon.png') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
 
     <!-- BEGIN: Theme CSS-->
@@ -60,7 +60,7 @@
                 <div class="misc-inner p-2 p-sm-3">
                     <div class="w-100 text-center">
                         <h2 class="mb-1">Page Not Found 🕵🏻‍♀️</h2>
-                        <p class="mb-2">Oops! 😖 The requested URL was not found on this server.</p><a class="btn btn-primary mb-2 btn-sm-block" href="{{ route('dashboard') }}">Back to home</a><img class="img-fluid" src="{{ url('assets/images/error.svg') }}" alt="Error page" />
+                        <p class="mb-2">Oops! 😖 The requested URL was not found on this server.</p><a class="btn btn-primary mb-2 btn-sm-block" href="{{ route('dashboard') }}">Back to home</a><img class="img-fluid" src="{{ asset('assets/images/error.svg') }}" alt="Error page" />
                     </div>
                 </div>
             </div>
