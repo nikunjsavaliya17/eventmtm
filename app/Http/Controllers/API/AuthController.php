@@ -49,10 +49,10 @@ class AuthController extends Controller
                 $user->save();
                 return response()->json(['status' => true, 'message' => 'Success', 'data' => new AppUserResource($user)], 200);
             } else {
-                return response()->json(['status' => false, 'message' => 'You not activated your account.', 'data' => null], 500);
+                return response()->json(['status' => false, 'message' => 'You not activated your account.', 'data' => []], 500);
             }
         }
-        return response()->json(['status' => false, 'message' => 'Invalid Credentials', 'data' => null], 500);
+        return response()->json(['status' => false, 'message' => 'Invalid Credentials', 'data' => []], 500);
     }
 
     public function forgotPassword(Request $request): \Illuminate\Http\JsonResponse
@@ -65,7 +65,7 @@ class AuthController extends Controller
         if (isset($user)) {
             return response()->json(['status' => true, 'message' => 'Success', 'data' => ['app_user_id' => $user->app_user_id]], 200);
         }
-        return response()->json(['status' => false, 'message' => 'Invalid User', 'data' => null], 500);
+        return response()->json(['status' => false, 'message' => 'Invalid User', 'data' => []], 500);
     }
 
     public function resetPassword(Request $request): \Illuminate\Http\JsonResponse
@@ -78,9 +78,9 @@ class AuthController extends Controller
         $user = AppUser::where('app_user_id', $requestData['app_user_id'])->first();
         if (isset($user)) {
             $user->update(['password' => Hash::make($requestData['password'])]);
-            return response()->json(['status' => true, 'message' => 'Success', 'data' => null], 200);
+            return response()->json(['status' => true, 'message' => 'Success', 'data' => []], 200);
         }
-        return response()->json(['status' => false, 'message' => 'Invalid User', 'data' => null], 500);
+        return response()->json(['status' => false, 'message' => 'Invalid User', 'data' => []], 500);
     }
 
     public function verifyOtp(Request $request): \Illuminate\Http\JsonResponse
@@ -96,9 +96,9 @@ class AuthController extends Controller
                 $user->update(['is_active' => 1, 'otp' => null]);
                 return response()->json(['status' => true, 'message' => 'Success', 'data' => new AppUserResource($user)], 200);
             } else {
-                return response()->json(['status' => false, 'message' => 'Invalid OTP', 'data' => null], 500);
+                return response()->json(['status' => false, 'message' => 'Invalid OTP', 'data' => []], 500);
             }
         }
-        return response()->json(['status' => false, 'message' => 'Invalid User', 'data' => null], 500);
+        return response()->json(['status' => false, 'message' => 'Invalid User', 'data' => []], 500);
     }
 }

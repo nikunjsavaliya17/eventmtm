@@ -26,7 +26,7 @@ class ValidateUserAccessToken
         return response()->json([
             'status' => false,
             'message' => "Invalid user access token!",
-            'data' => null,
+            'data' => [],
         ], 401);
     }
 }

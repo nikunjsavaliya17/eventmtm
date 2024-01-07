@@ -16,7 +16,7 @@ class Controller extends BaseController
         $validator = $this->getValidationFactory()->make($request->all(), $rules, $messages, $customAttributes);
         if ($validator->fails()) {
             $error = array_values($validator->errors()->toArray());
-            response()->json(['status' => false, 'message' => $error[0][0], 'data' => null], 500)->throwResponse();
+            response()->json(['status' => false, 'message' => $error[0][0], 'data' => []], 500)->throwResponse();
         }
     }
 }

@@ -36,6 +36,6 @@ class AppUserController extends Controller
         if (!empty($updateData)) {
             AppUser::where('set_app_user_id', $request->get('set_app_user_id'))->update($updateData);
         }
-        return response()->json(['status' => true, 'message' => 'Success', 'data' => null], 200);
+        return response()->json(['status' => true, 'message' => 'Success', 'data' => []], 200);
     }
 }
