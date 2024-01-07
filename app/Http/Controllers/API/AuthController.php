@@ -28,7 +28,7 @@ class AuthController extends Controller
             'email' => $requestData['email'],
             'password' => Hash::make($requestData['password']),
             'mobile_number' => $requestData['mobile_number'],
-            'access_token' => Str::random(40) . time(),
+//            'access_token' => Str::random(40) . time(),
             'is_active' => 1,
         ]);
         return response()->json(['status' => true, 'message' => 'Success', 'data' => new AppUserResource($user)], 200);
