@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AppUserController;
-use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\API\AuthController;
 use App\Http\Middleware\ValidateUserAccessToken;
 use Illuminate\Support\Facades\Route;
 
