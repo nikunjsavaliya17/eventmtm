@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AppUserController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\HomeController;
 use App\Http\Middleware\ValidateUserAccessToken;
 use Illuminate\Support\Facades\Route;
 
@@ -28,5 +29,9 @@ Route::group(['middleware' => [ValidateUserAccessToken::class]], function () {
     Route::controller(AppUserController::class)->group(function () {
         Route::get('profile', 'profile');
         Route::post('profile/update', 'updateProfile');
+    });
+
+    Route::controller(HomeController::class)->group(function () {
+        Route::get('home', 'home');
     });
 });

@@ -10,7 +10,7 @@ function formatDate($date, $format = 'd M, Y h:i A'): ?string
     return null;
 }
 
-function uploadFile($file, $path, $exist_file = null, $dimensions = []): string
+function uploadFile($file, $path, $exist_file = null): string
 {
     if (isset($exist_file)) {
         removeFile($exist_file, $path);

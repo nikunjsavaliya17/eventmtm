@@ -18,9 +18,21 @@ class Event extends Model
 
     protected $guarded = ["event_id"];
 
+    protected $casts = ['start_date' => 'datetime', 'end_date' => 'datetime'];
+
+    public function scopeByActive($q)
+    {
+        $q->where('is_active', 1);
+    }
+
     public function eventCompanyDetail()
     {
         return $this->hasOne(EventCompany::class, 'event_company_id', 'event_company_id')->withTrashed();
+    }
+
+    public function relatedMedia(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(EventMedia::class, 'event_id', 'event_id');
     }
 
     public function createdByUser(): \Illuminate\Database\Eloquent\Relations\HasOne

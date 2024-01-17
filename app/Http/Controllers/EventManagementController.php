@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\EventCompany;
+use App\Models\EventMedia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
 class EventManagementController extends Controller
@@ -67,31 +69,61 @@ class EventManagementController extends Controller
         $validateArr = [
             'title' => 'required',
             'contact_name' => 'required',
-            'date_range' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
             'contact_email' => 'email|required',
             'contact_phone_number' => 'required|numeric|digits:10',
         ];
         $this->validate($request, $validateArr);
         $requestData = $request->except('_token');
-        if (isset($requestData['date_range'])){
-            $dateArr = explode(' to ', $requestData['date_range']);
-            $requestData['start_date'] = $dateArr[0]." 00:00:00";
-            $requestData['end_date'] = $dateArr[1]." 23:59:59";
-            unset($requestData['date_range']);
-        }
-        if (isset($requestData['image'])) {
-            $requestData['image'] = uploadFile($requestData['image'], Event::IMG_DIR);
-        }
+
         if (isset($requestData['update_id'])) {
-            $item = Event::where('event_id', $requestData['update_id'])->first();
+            $event = Event::where('event_id', $requestData['update_id'])->first();
             unset($requestData['update_id']);
-            $item->update($requestData);
+            if (isset($requestData['image'])) {
+                $requestData['image'] = uploadFile($requestData['image'], Event::IMG_DIR, $event->image);
+            }
+            $event->update($requestData);
             $message = "Data Updated Successfully";
         } else {
             $requestData['is_active'] = 1;
+            $requestData['image'] = uploadFile($requestData['image'], Event::IMG_DIR);
             $requestData['created_by'] = auth()->user()->user_id;
-            Event::create($requestData);
+            $event = Event::create($requestData);
             $message = "Data Created Successfully";
+        }
+
+        $media_dir = EventMedia::MEDIA_DIR;
+        $event_media_ids = [];
+        if (isset($requestData['media_list']) && !empty($requestData['media_list'])){
+            foreach ($requestData['media_list'] as $datum){
+                if (isset($datum['exist_id']) && !empty($datum['exist_id'])){
+                    $event_media_ids[] = $datum['exist_id'];
+                    if (isset($datum['media'])){
+                        $eventMediaData = EventMedia::find($datum['exist_id']);
+                        $event_media_name = uploadFile($datum['media'], $media_dir, $eventMediaData->media_value);
+                        $eventMediaData->update([
+                            'media_type' => Str::contains($event_media_name, '.mp4') ? 2 : 1,
+                            'media_value' => $event_media_name,
+                            'created_by' => auth()->user()->user_id,
+                        ]);
+                    }
+                }else{
+                    $event_media_name = uploadFile($datum['media'], $media_dir);
+                    $eventMediaData = EventMedia::create([
+                        'event_id' => $event->event_id,
+                        'media_type' => Str::contains($event_media_name, '.mp4') ? 2 : 1,
+                        'media_value' => $event_media_name,
+                        'created_by' => auth()->user()->user_id,
+                    ]);
+                    $event_media_ids[] = $eventMediaData->event_media_id;
+                }
+            }
+        }
+        $deletedMediaList = EventMedia::where('event_id', $event->event_id)->whereNotIn('event_media_id', $event_media_ids)->get();
+        foreach ($deletedMediaList as $deletedMedia){
+            removeFile($deletedMedia->media_value, $media_dir);
+            $deletedMedia->delete();
         }
         return redirect()->route('event_management.index')->with('success', $message);
     }

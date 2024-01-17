@@ -9,6 +9,8 @@ class EventMedia extends Model
 {
     use HasFactory;
 
+    const MEDIA_DIR = 'event-media';
+
     protected $table = "event_media";
 
     protected $primaryKey = "event_media_id";
