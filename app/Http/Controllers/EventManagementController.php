@@ -42,6 +42,9 @@ class EventManagementController extends Controller
                 ->addColumn('event_company', function ($item) {
                     return $item->eventCompanyDetail->title ?? "---";
                 })
+                ->editColumn('start_date', function ($item) {
+                    return formatDate($item->start_date);
+                })
                 ->editColumn('created_at', function ($item) {
                     return formatDate($item->created_at);
                 })

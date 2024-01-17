@@ -29,6 +29,7 @@
                             <tr>
                                 <th data-orderable="false">Title</th>
                                 <th data-orderable="false" data-searchable="false">Event Company</th>
+                                <th data-orderable="false" data-searchable="false">Event At</th>
                                 <th data-orderable="false" data-searchable="false">Status</th>
                                 <th data-orderable="false" data-searchable="false">Created By</th>
                                 <th data-searchable="false">Created At</th>
@@ -69,12 +70,13 @@
                 "columns": [
                     {data: 'title', name: 'title'},
                     {data: 'event_company', name: 'event_company'},
+                    {data: 'start_date', name: 'start_date'},
                     {data: 'is_active', name: 'is_active'},
                     {data: 'created_by', name: 'created_by'},
                     {data: 'created_at', name: 'created_at'},
                     {data: 'actions', name: 'actions'}
                 ],
-                order: [[4, "desc"]],
+                order: [[5, "desc"]],
             });
         });
 
