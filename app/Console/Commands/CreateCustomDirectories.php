@@ -45,6 +45,7 @@ class CreateCustomDirectories extends Command
                 'app/public/sponsor' => 'sponsor',
                 'app/public/food_partner' => 'food_partner',
                 'app/public/food_menu' => 'food_menu',
+                'app/public/event-company' => 'event-company',
                 'app/public/event' => 'event',
                 'app/public/event-media' => 'event-media',
                 'app/public/app_user' => 'app_user',

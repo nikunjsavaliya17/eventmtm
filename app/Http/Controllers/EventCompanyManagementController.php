@@ -86,11 +86,15 @@ class EventCompanyManagementController extends Controller
         if (isset($requestData['update_id'])) {
             $item = EventCompany::where('event_company_id', $requestData['update_id'])->first();
             unset($requestData['update_id']);
+            if (isset($requestData['image'])) {
+                $requestData['image'] = uploadFile($requestData['image'], EventCompany::IMG_DIR, $item->image);
+            }
             $item->update($requestData);
             $message = "Data Updated Successfully";
         } else {
             $requestData['is_active'] = 1;
             $requestData['created_by'] = auth()->user()->user_id;
+            $requestData['image'] = uploadFile($requestData['image'], EventCompany::IMG_DIR);
             EventCompany::create($requestData);
             $message = "Data Created Successfully";
         }

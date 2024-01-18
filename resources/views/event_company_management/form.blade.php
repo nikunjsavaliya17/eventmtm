@@ -35,9 +35,17 @@
                     <label class="form-label">ABN Number</label>
                     {!! Form::text('abn_number', $eventCompany->abn_number ?? old('abn_number'), ['class' => 'form-control', 'placeholder' => 'Enter number', 'required' => true]) !!}
                 </div>
-                <div class="col-sm-12">
+                <div class="col-sm-8 col-12">
                     <label class="form-label">Address</label>
                     {!! Form::text('address', $eventCompany->address ?? old('address'), ['class' => 'form-control', 'placeholder' => 'Enter address', 'required' => true]) !!}
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <label class="form-label">Image</label>
+                    <input type="file" accept="image/*" class="dropifyImage"
+                           data-allowed-file-extensions="png jpg jpeg" data-show-remove="false"
+                           @if (isset($eventCompany) && $eventCompany->image != '') data-default-file="{{ getFileUrl($eventCompany->image, \App\Models\EventCompany::IMG_DIR) }}"
+                           @else required @endif
+                           name="image" id="image">
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <label class="form-label">Contact Name</label>
@@ -73,11 +81,15 @@
 @endsection
 
 @push('css')
+    <link rel="stylesheet" href="{{ asset('assets/plugins/dropify/css/dropify.css') }}">
 @endpush
 @push('footer_scripts')
+    <script type="text/javascript" src="{{ asset('assets/plugins/dropify/js/dropify.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#inputForm").validate();
+
+            $('.dropifyImage').dropify();
         });
     </script>
 @endpush

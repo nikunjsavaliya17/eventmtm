@@ -33,5 +33,6 @@ Route::group(['middleware' => [ValidateUserAccessToken::class]], function () {
 
     Route::controller(HomeController::class)->group(function () {
         Route::get('home', 'home');
+        Route::get('event-detail', 'eventDetail');
     });
 });

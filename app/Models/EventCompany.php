@@ -10,6 +10,8 @@ class EventCompany extends Model
 {
     use HasFactory, SoftDeletes;
 
+    const IMG_DIR = 'event-company';
+
     protected $table = "event_companies";
 
     protected $primaryKey = "event_company_id";
