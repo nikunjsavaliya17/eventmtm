@@ -23,6 +23,11 @@ class Sponsor extends Model
         return $this->hasOne(SponsorType::class, 'sponsor_type_id', 'sponsor_type_id')->withTrashed();
     }
 
+    public function eventDetail()
+    {
+        return $this->hasOne(Event::class, 'event_id', 'event_id')->withTrashed();
+    }
+
     public function createdByUser(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(User::class, 'user_id', 'created_by');

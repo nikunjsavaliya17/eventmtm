@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('sponsors', function (Blueprint $table) {
             $table->increments('sponsor_id');
             $table->integer('sponsor_type_id')->default(0)->index();
-            $table->string('event_name')->nullable();
+            $table->integer('event_id')->default(0)->index();
             $table->string('company_name')->nullable();
             $table->string('contact_name')->nullable();
             $table->string('email')->nullable();

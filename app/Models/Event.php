@@ -35,6 +35,11 @@ class Event extends Model
         return $this->hasMany(EventMedia::class, 'event_id', 'event_id');
     }
 
+    public function sponsors(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Sponsor::class, 'event_id', 'event_id')->where('is_active', 1);
+    }
+
     public function createdByUser(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(User::class, 'user_id', 'created_by');

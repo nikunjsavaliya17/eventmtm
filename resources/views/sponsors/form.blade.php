@@ -24,8 +24,8 @@
                     {!! Form::select('sponsor_type_id', $sponsorTypes, $sponsor->sponsor_type_id ?? old('sponsor_type_id'), ['class' => 'form-control select2', 'placeholder' => 'Select', 'required' => true]) !!}
                 </div>
                 <div class="col-md-6 col-sm-12">
-                    <label class="form-label">Event Name</label>
-                    {!! Form::text('event_name', $sponsor->event_name ?? old('event_name'), ['class' => 'form-control', 'placeholder' => 'Enter name', 'required' => true]) !!}
+                    <label class="form-label">Event</label>
+                    {!! Form::select('event_id', $events, $sponsor->event_id ?? old('event_id'), ['class' => 'form-control select2', 'placeholder' => 'Select', 'required' => true]) !!}
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <label class="form-label">Company Name</label>

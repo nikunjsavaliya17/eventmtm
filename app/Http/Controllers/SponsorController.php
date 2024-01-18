@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\Sponsor;
 use App\Models\SponsorType;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class SponsorController extends Controller
     {
         $user = auth()->user();
         if ($request->ajax()) {
-            $data = Sponsor::query()->with(['createdByUser:user_id,name', 'typeDetail:sponsor_type_id,title']);
+            $data = Sponsor::query()->with(['createdByUser:user_id,name', 'typeDetail:sponsor_type_id,title', 'eventDetail:event_id,title']);
             if ($request->filled('created_by')) {
                 $data = $data->where('created_by', $request->get('created_by'));
             }
@@ -40,6 +41,9 @@ class SponsorController extends Controller
                 ->editColumn('sponsor_type_id', function ($item) {
                     return $item->typeDetail->title ?? "---";
                 })
+                ->editColumn('event_id', function ($item) {
+                    return $item->eventDetail->title ?? "---";
+                })
                 ->editColumn('created_at', function ($item) {
                     return formatDate($item->created_at);
                 })
@@ -59,7 +63,8 @@ class SponsorController extends Controller
     {
         $formMode = 'Add';
         $sponsorTypes = SponsorType::pluck('title', 'sponsor_type_id')->toArray();
-        return view('sponsors.form', compact('formMode', 'sponsorTypes'));
+        $events = Event::pluck('title', 'event_id')->toArray();
+        return view('sponsors.form', compact('formMode', 'sponsorTypes', 'events'));
     }
 
     public function store_update(Request $request)
@@ -98,7 +103,8 @@ class SponsorController extends Controller
         $sponsor = Sponsor::findOrFail($id);
         $formMode = 'Edit';
         $sponsorTypes = SponsorType::pluck('title', 'sponsor_type_id')->toArray();
-        return view('sponsors.form', compact('formMode', 'sponsor', 'sponsorTypes'));
+        $events = Event::pluck('title', 'event_id')->toArray();
+        return view('sponsors.form', compact('formMode', 'sponsor', 'sponsorTypes', 'events'));
     }
 
     public function update_data(Request $request)

@@ -27,7 +27,7 @@
                         <table class="datatable-basic table" id="listDatatable">
                             <thead>
                             <tr>
-                                <th data-orderable="false">Event Name</th>
+                                <th data-orderable="false" data-searchable="false">Event Name</th>
                                 <th data-orderable="false">Company Name</th>
                                 <th data-orderable="false" data-searchable="false">Type</th>
                                 <th data-orderable="false" data-searchable="false">Status</th>
@@ -68,7 +68,7 @@
                     }
                 },
                 "columns": [
-                    {data: 'event_name', name: 'event_name'},
+                    {data: 'event_id', name: 'event_id'},
                     {data: 'company_name', name: 'company_name'},
                     {data: 'sponsor_type_id', name: 'sponsor_type_id'},
                     {data: 'is_active', name: 'is_active'},

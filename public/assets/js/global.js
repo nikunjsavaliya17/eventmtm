@@ -33,16 +33,18 @@ $(window).on('load', function () {
     }
 
     if ($('.select2').length) {
-        var $select2Input = $('.select2');
-        $select2Input.wrap('<div class="position-relative"></div>');
-        $select2Input.select2({
-            placeholder: '--SELECT--',
-            dropdownAutoWidth: true,
-            allowClear: true,
-            width: '100%',
-            dropdownParent: $select2Input.parent()
-        }).change(function () {
-            $(this).valid();
+        $('.select2').each(function (){
+            var $select2Input = $(this);
+            $select2Input.wrap('<div class="position-relative"></div>');
+            $select2Input.select2({
+                placeholder: '--SELECT--',
+                dropdownAutoWidth: true,
+                allowClear: true,
+                width: '100%',
+                dropdownParent: $select2Input.parent()
+            }).change(function () {
+                $(this).valid();
+            });
         });
     }
 })
