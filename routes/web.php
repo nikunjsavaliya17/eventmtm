@@ -6,11 +6,13 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\EventCompanyManagementController;
 use App\Http\Controllers\EventManagementController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FoodEventController;
 use App\Http\Controllers\FoodMenuController;
 use App\Http\Controllers\FoodPartnerController;
 use App\Http\Controllers\FoodTypeController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\SponsorTypeController;
 use Illuminate\Support\Facades\Route;
@@ -51,10 +53,20 @@ Route::group(['middleware' => ['auth', 'web']], function () {
 //
 //    Route::resource('admins', AdminController::class);
 
-    Route::controller(EmailTemplateController::class)->group(function () {
-        Route::get('email-templates', 'index')->name('email_templates');
-        Route::get('email-templates/edit/{id}', 'edit')->name('email_templates.edit');
-        Route::post('email-templates/update/{id}', 'update')->name('email_templates.update');
+    Route::group(['middleware' => ['canUser:email-templates-read'], 'prefix' => '/email-templates', 'as' => 'email_templates.'], function () {
+        Route::controller(EmailTemplateController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::post('update/{id}', 'update')->name('update');
+        });
+    });
+
+    Route::group(['middleware' => ['canUser:custom-page-read'], 'prefix' => '/custom-page', 'as' => 'custom_page.'], function () {
+        Route::controller(PageController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::post('update/{id}', 'update')->name('update');
+        });
     });
 
     Route::group(['middleware' => ['canUser:event-company-read'], 'prefix' => '/event-company-management', 'as' => 'event_company_management.'], function () {
@@ -154,6 +166,17 @@ Route::group(['middleware' => ['auth', 'web']], function () {
 
     Route::group(['middleware' => ['canUser:admin-user-read'], 'prefix' => '/admin-users', 'as' => 'admin_users.'], function () {
         Route::controller(AdminUserController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/add', 'add')->name('add');
+            Route::get('/edit/{id}', 'edit')->name('edit');
+            Route::post('/store-update', 'store_update')->name('store_update');
+            Route::post('/update-data', 'update_data')->name('update_data');
+            Route::post('/delete', 'delete')->name('delete');
+        });
+    });
+
+    Route::group(['middleware' => ['canUser:faqs-read'], 'prefix' => '/faqs', 'as' => 'faqs.'], function () {
+        Route::controller(FaqController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/add', 'add')->name('add');
             Route::get('/edit/{id}', 'edit')->name('edit');

@@ -116,12 +116,30 @@
                     </a>
                 </li>
             @endif
-            <li class="@if(request()->segment(1) == 'email-templates') active @endif nav-item">
-                <a class="d-flex align-items-center" href="{{ route('email_templates') }}">
-                    <i data-feather="mail"></i><span
-                            class="menu-title text-truncate">Email Templates</span>
-                </a>
-            </li>
+            @if($user->can('faqs-read'))
+                <li class="@if(request()->segment(1) == 'faqs') active @endif nav-item">
+                    <a class="d-flex align-items-center" href="{{ route('faqs.index') }}">
+                        <i data-feather="help-circle"></i><span
+                                class="menu-title text-truncate">FAQs</span>
+                    </a>
+                </li>
+            @endif
+            @if($user->can('custom-page-read'))
+                <li class="@if(request()->segment(1) == 'custom-page') active @endif nav-item">
+                    <a class="d-flex align-items-center" href="{{ route('custom_page.index') }}">
+                        <i data-feather="book"></i><span
+                                class="menu-title text-truncate">Pages</span>
+                    </a>
+                </li>
+            @endif
+            @if($user->can('email-templates-read'))
+                <li class="@if(request()->segment(1) == 'email-templates') active @endif nav-item">
+                    <a class="d-flex align-items-center" href="{{ route('email_templates.index') }}">
+                        <i data-feather="mail"></i><span
+                                class="menu-title text-truncate">Email Templates</span>
+                    </a>
+                </li>
+            @endif
         </ul>
     </div>
 </div>

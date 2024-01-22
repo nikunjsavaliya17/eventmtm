@@ -6,7 +6,7 @@
                 ({{ \App\Models\EmailTemplate::IDENTIFIERS[$email_template->identifier] }})</h4>
             <div class="dt-action-buttons text-end">
                 <div class="dt-buttons d-inline-flex">
-                    <a href="{{ route('email_templates') }}" class="dt-button create-new btn btn-warning" tabindex="0"
+                    <a href="{{ route('email_templates.index') }}" class="dt-button create-new btn btn-warning" tabindex="0"
                        aria-controls="DataTables_Table_0"
                        type="button"><span><i data-feather="arrow-left"></i> Back</span>
                     </a>

@@ -24,6 +24,6 @@ class EmailTemplateController extends Controller
         $email_template = EmailTemplate::findOrFail($id);
         $requestData = $request->all();
         $email_template->update($requestData);
-        return to_route('email_templates')->with('success', 'Data Updated Successfully');
+        return to_route('email_templates.index')->with('success', 'Data Updated Successfully');
     }
 }

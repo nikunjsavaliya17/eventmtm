@@ -23,6 +23,9 @@ class PermissionTableSeeder extends Seeder
             'food-type-read', 'food-type-write', 'food-type-delete',
             'food-event-read', 'food-event-write', 'food-event-delete',
             'food-menu-read', 'food-menu-write', 'food-menu-delete',
+            'faqs-read', 'faqs-write', 'faqs-delete',
+            'email-templates-read', 'email-templates-write',
+            'custom-page-read', 'custom-page-write',
         ];
         foreach ($permissions as $permission){
             $permissionExist = Permission::where('name', $permission)->exists();
