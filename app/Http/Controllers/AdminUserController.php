@@ -22,7 +22,7 @@ class AdminUserController extends Controller
             }
             return DataTables::of($data)
                 ->editColumn('is_active', function ($item) use ($user) {
-                    if ($user->can('admin-user-write')) {
+                    if ($user->can('admin-user-write') && ($item->user_id > 1)) {
                         $checkedClass = $item->is_active ? 'checked' : '';
                         $is_publish = '<div class="d-flex flex-column">
                                             <label class="form-check-label mb-50" for="customSwitch' . $item->user_id . '"></label>

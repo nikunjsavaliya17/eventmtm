@@ -116,6 +116,14 @@
                     </a>
                 </li>
             @endif
+            @if($user->can('admin-roles-read'))
+                <li class="@if(request()->segment(1) == 'roles') active @endif nav-item">
+                    <a class="d-flex align-items-center" href="{{ route('roles.index') }}">
+                        <i data-feather="align-left"></i><span
+                                class="menu-title text-truncate">Admin Roles</span>
+                    </a>
+                </li>
+            @endif
             @if($user->can('faqs-read'))
                 <li class="@if(request()->segment(1) == 'faqs') active @endif nav-item">
                     <a class="d-flex align-items-center" href="{{ route('faqs.index') }}">

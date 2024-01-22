@@ -26,6 +26,7 @@ class PermissionTableSeeder extends Seeder
             'faqs-read', 'faqs-write', 'faqs-delete',
             'email-templates-read', 'email-templates-write',
             'custom-page-read', 'custom-page-write',
+            'admin-roles-read', 'admin-roles-write',
         ];
         foreach ($permissions as $permission){
             $permissionExist = Permission::where('name', $permission)->exists();

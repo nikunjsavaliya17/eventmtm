@@ -13,6 +13,7 @@ use App\Http\Controllers\FoodPartnerController;
 use App\Http\Controllers\FoodTypeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\SponsorTypeController;
 use Illuminate\Support\Facades\Route;
@@ -63,6 +64,14 @@ Route::group(['middleware' => ['auth', 'web']], function () {
 
     Route::group(['middleware' => ['canUser:custom-page-read'], 'prefix' => '/custom-page', 'as' => 'custom_page.'], function () {
         Route::controller(PageController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::post('update/{id}', 'update')->name('update');
+        });
+    });
+
+    Route::group(['middleware' => ['canUser:roles-read'], 'prefix' => '/roles', 'as' => 'roles.'], function () {
+        Route::controller(RoleController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::post('update/{id}', 'update')->name('update');
