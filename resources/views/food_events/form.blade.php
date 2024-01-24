@@ -19,13 +19,13 @@
                 @if(isset($foodEvent))
                     <input type="hidden" name="update_id" value="{{ $foodEvent->food_partner_event_id }}">
                 @endif
-                <div class="col-md-6 col-sm-12 position-relative">
-                    <label class="form-label" for="title">Food Partner</label>
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">Food Partner</label>
                     {!! Form::select('food_partner_id', $foodPartners, $foodEvent->food_partner_id ?? old('food_partner_id'), ['class' => 'form-control select2', 'placeholder' => 'Select', 'required' => true]) !!}
                 </div>
-                <div class="col-md-6 col-sm-12 position-relative">
-                    <label class="form-label" for="title">Title</label>
-                    {!! Form::text('title', $foodEvent->title ?? old('title'), ['class' => 'form-control', 'placeholder' => 'Enter title', 'required' => true]) !!}
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">Event</label>
+                    {!! Form::select('event_id', $events, $foodEvent->event_id ?? old('event_id'), ['class' => 'form-control select2', 'placeholder' => 'Select', 'required' => true]) !!}
                 </div>
             </div>
             <button class="btn btn-primary waves-effect waves-float waves-light" type="submit">Submit</button>

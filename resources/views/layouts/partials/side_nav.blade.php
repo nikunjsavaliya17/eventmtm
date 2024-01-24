@@ -80,14 +80,6 @@
                         </a>
                     </li>
                 @endif
-                @if($user->can('food-event-read'))
-                    <li class="@if(request()->segment(1) == 'food-events') active @endif nav-item">
-                        <a class="d-flex align-items-center" href="{{ route('food_events.index') }}">
-                            <i data-feather="codesandbox"></i><span
-                                    class="menu-title text-truncate">Events</span>
-                        </a>
-                    </li>
-                @endif
                 @if($user->can('food-type-read'))
                     <li class="@if(request()->segment(1) == 'food-types') active @endif nav-item">
                         <a class="d-flex align-items-center" href="{{ route('food_types.index') }}">
@@ -101,6 +93,14 @@
                         <a class="d-flex align-items-center" href="{{ route('food_menu.index') }}">
                             <i data-feather="book-open"></i><span
                                     class="menu-title text-truncate">Menu</span>
+                        </a>
+                    </li>
+                @endif
+                @if($user->can('food-event-read'))
+                    <li class="@if(request()->segment(1) == 'food-events') active @endif nav-item">
+                        <a class="d-flex align-items-center" href="{{ route('food_events.index') }}">
+                            <i data-feather="codesandbox"></i><span
+                                    class="menu-title text-truncate">Events</span>
                         </a>
                     </li>
                 @endif

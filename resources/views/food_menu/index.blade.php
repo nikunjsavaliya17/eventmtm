@@ -28,7 +28,9 @@
                             <thead>
                             <tr>
                                 <th data-orderable="false">Title</th>
+                                <th data-orderable="false" data-searchable="false">Food Partner</th>
                                 <th data-orderable="false" data-searchable="false">Type</th>
+                                <th data-orderable="false" data-searchable="false">Amount</th>
                                 <th data-orderable="false" data-searchable="false">Status</th>
                                 <th data-orderable="false" data-searchable="false">Created By</th>
                                 <th data-searchable="false">Created At</th>
@@ -68,13 +70,15 @@
                 },
                 "columns": [
                     {data: 'title', name: 'title'},
+                    {data: 'food_partner_id', name: 'food_partner_id'},
                     {data: 'food_type_id', name: 'food_type_id'},
+                    {data: 'amount', name: 'amount'},
                     {data: 'is_active', name: 'is_active'},
                     {data: 'created_by', name: 'created_by'},
                     {data: 'created_at', name: 'created_at'},
                     {data: 'actions', name: 'actions'}
                 ],
-                order: [[4, "desc"]],
+                order: [[6, "desc"]],
             });
         });
 

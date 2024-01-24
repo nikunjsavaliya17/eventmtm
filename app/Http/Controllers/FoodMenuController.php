@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FoodMenu;
+use App\Models\FoodPartner;
 use App\Models\FoodType;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -13,7 +14,7 @@ class FoodMenuController extends Controller
     {
         $user = auth()->user();
         if ($request->ajax()) {
-            $data = FoodMenu::query()->with(['createdByUser:user_id,name', 'typeDetail:food_type_id,title']);
+            $data = FoodMenu::query()->with(['createdByUser:user_id,name', 'typeDetail:food_type_id,title', 'foodPartnerDetail:food_partner_id,company_name']);
             if ($request->filled('created_by')) {
                 $data = $data->where('created_by', $request->get('created_by'));
             }
@@ -37,8 +38,14 @@ class FoodMenuController extends Controller
                     }
                     return $is_publish;
                 })
-                ->addColumn('food_type_id', function ($item) {
+                ->editColumn('food_type_id', function ($item) {
                     return $item->typeDetail->title ?? "---";
+                })
+                ->editColumn('food_partner_id', function ($item) {
+                    return $item->foodPartnerDetail->company_name ?? "---";
+                })
+                ->editColumn('amount', function ($item) {
+                    return formatAmount($item->amount);
                 })
                 ->editColumn('created_at', function ($item) {
                     return formatDate($item->created_at);
@@ -59,7 +66,8 @@ class FoodMenuController extends Controller
     {
         $formMode = 'Add';
         $foodTypes = FoodType::pluck('title', 'food_type_id')->toArray();
-        return view('food_menu.form', compact('formMode', 'foodTypes'));
+        $foodPartners = FoodPartner::pluck('company_name', 'food_partner_id')->toArray();
+        return view('food_menu.form', compact('formMode', 'foodTypes', 'foodPartners'));
     }
 
     public function store_update(Request $request)
@@ -91,7 +99,8 @@ class FoodMenuController extends Controller
         $foodMenu = FoodMenu::findOrFail($id);
         $formMode = 'Edit';
         $foodTypes = FoodType::pluck('title', 'food_type_id')->toArray();
-        return view('food_menu.form', compact('formMode', 'foodMenu', 'foodTypes'));
+        $foodPartners = FoodPartner::pluck('company_name', 'food_partner_id')->toArray();
+        return view('food_menu.form', compact('formMode', 'foodMenu', 'foodTypes', 'foodPartners'));
     }
 
     public function update_data(Request $request)

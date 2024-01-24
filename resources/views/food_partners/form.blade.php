@@ -35,6 +35,14 @@
                     <label class="form-label">Contact Number</label>
                     {!! Form::number('contact_phone_number', $foodPartner->contact_phone_number ?? old('contact_phone_number'), ['class' => 'form-control', 'placeholder' => 'Enter number', 'required' => true]) !!}
                 </div>
+                <div class="col-sm-12">
+                    <label class="form-label">Address</label>
+                    {!! Form::text('address', $foodPartner->address ?? old('address'), ['class' => 'form-control', 'placeholder' => 'Enter address', 'required' => true]) !!}
+                </div>
+                <div class="col-sm-12">
+                    <label class="form-label">Description</label>
+                    {!! Form::text('description', $foodPartner->description ?? old('description'), ['class' => 'form-control', 'placeholder' => 'Enter description', 'required' => true]) !!}
+                </div>
                 <div class="col-md-6 col-sm-12">
                     <label class="form-label">Username</label>
                     {!! Form::text('username', $foodPartner->username ?? old('username'), ['class' => 'form-control', 'placeholder' => 'Enter username', 'required' => true]) !!}

@@ -27,8 +27,8 @@
                         <table class="datatable-basic table" id="listDatatable">
                             <thead>
                             <tr>
-                                <th data-orderable="false">Title</th>
-                                <th data-orderable="false" data-searchable="false">Food Partner</th>
+                                <th data-orderable="false">Event Name</th>
+                                <th data-orderable="false">Food Partner</th>
                                 <th data-orderable="false" data-searchable="false">Status</th>
                                 <th data-orderable="false" data-searchable="false">Created By</th>
                                 <th data-searchable="false">Created At</th>
@@ -67,8 +67,8 @@
                     }
                 },
                 "columns": [
-                    {data: 'title', name: 'title'},
-                    {data: 'food_partner', name: 'food_partner'},
+                    {data: 'event_title', name: 'eventDetail.title'},
+                    {data: 'food_partner', name: 'foodPartnerDetail.company_name'},
                     {data: 'is_active', name: 'is_active'},
                     {data: 'created_by', name: 'created_by'},
                     {data: 'created_at', name: 'created_at'},

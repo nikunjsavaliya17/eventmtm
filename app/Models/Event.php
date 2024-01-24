@@ -40,6 +40,11 @@ class Event extends Model
         return $this->hasMany(Sponsor::class, 'event_id', 'event_id')->where('is_active', 1);
     }
 
+    public function eventFoodPartners(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(FoodPartnerEvent::class, 'event_id', 'event_id');
+    }
+
     public function createdByUser(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(User::class, 'user_id', 'created_by');

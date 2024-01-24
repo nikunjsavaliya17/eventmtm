@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\FoodPartner;
 use App\Models\FoodPartnerEvent;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class FoodEventController extends Controller
     {
         $user = auth()->user();
         if ($request->ajax()) {
-            $data = FoodPartnerEvent::query()->with(['createdByUser:user_id,name', 'foodPartnerDetail:food_partner_id,company_name']);
+            $data = FoodPartnerEvent::query()->with(['eventDetail:event_id,title', 'createdByUser:user_id,name', 'foodPartnerDetail:food_partner_id,company_name']);
             if ($request->filled('food_partner_id')) {
                 $data = $data->where('food_partner_id', $request->get('food_partner_id'));
             }
@@ -40,6 +41,9 @@ class FoodEventController extends Controller
                     }
                     return $is_publish;
                 })
+                ->addColumn('event_title', function ($item) {
+                    return $item->eventDetail->title ?? "---";
+                })
                 ->addColumn('food_partner', function ($item) {
                     return $item->foodPartnerDetail->company_name ?? "---";
                 })
@@ -62,24 +66,27 @@ class FoodEventController extends Controller
     {
         $formMode = 'Add';
         $foodPartners = FoodPartner::pluck('company_name', 'food_partner_id')->toArray();
-        return view('food_events.form', compact('formMode', 'foodPartners'));
+        $events = Event::pluck('title', 'event_id')->toArray();
+        return view('food_events.form', compact('formMode', 'foodPartners', 'events'));
     }
 
     public function store_update(Request $request)
     {
-        $validateArr = [
-            'title' => 'required|unique:food_partner_events,title',
-        ];
-        if ($request->filled('update_id')) {
-            $validateArr['title'] .= ',' . $request->get('update_id') . ',food_partner_event_id';
-        }
         $requestData = $request->except('_token');
         if (isset($requestData['update_id'])) {
             $item = FoodPartnerEvent::where('food_partner_event_id', $requestData['update_id'])->first();
+            $dataExist = FoodPartnerEvent::where('food_partner_event_id', '!=', $item->food_partner_event_id)->where('event_id', $requestData['event_id'])->where('food_partner_id', $requestData['food_partner_id'])->exists();
+            if ($dataExist){
+                return redirect()->back()->with('error', 'Event food partner relation already exists.');
+            }
             unset($requestData['update_id']);
             $item->update($requestData);
             $message = "Data Updated Successfully";
         } else {
+            $dataExist = FoodPartnerEvent::where('event_id', $requestData['event_id'])->where('food_partner_id', $requestData['food_partner_id'])->exists();
+            if ($dataExist){
+                return redirect()->back()->with('error', 'Event food partner relation already exists.');
+            }
             $requestData['is_active'] = 1;
             $requestData['created_by'] = auth()->user()->user_id;
             FoodPartnerEvent::create($requestData);
@@ -92,8 +99,9 @@ class FoodEventController extends Controller
     {
         $foodEvent = FoodPartnerEvent::findOrFail($id);
         $formMode = 'Edit';
+        $events = Event::pluck('title', 'event_id')->toArray();
         $foodPartners = FoodPartner::pluck('company_name', 'food_partner_id')->toArray();
-        return view('food_events.form', compact('formMode', 'foodEvent', 'foodPartners'));
+        return view('food_events.form', compact('formMode', 'foodEvent', 'foodPartners', 'events'));
     }
 
     public function update_data(Request $request)

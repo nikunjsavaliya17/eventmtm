@@ -20,6 +20,10 @@
                     <input type="hidden" name="update_id" value="{{ $foodMenu->food_menu_id }}">
                 @endif
                 <div class="col-md-6 col-sm-12">
+                    <label class="form-label">Food Partner</label>
+                    {!! Form::select('food_partner_id', $foodPartners, $foodMenu->food_partner_id ?? old('food_partner_id'), ['class' => 'form-control select2', 'placeholder' => 'Select', 'required' => true]) !!}
+                </div>
+                <div class="col-md-6 col-sm-12">
                     <label class="form-label">Food Type</label>
                     {!! Form::select('food_type_id', $foodTypes, $foodMenu->food_type_id ?? old('food_type_id'), ['class' => 'form-control select2', 'placeholder' => 'Select', 'required' => true]) !!}
                 </div>
@@ -30,6 +34,10 @@
                 <div class="col-md-6 col-sm-12">
                     <label class="form-label">SKU</label>
                     {!! Form::number('sku', $foodMenu->sku ?? old('sku'), ['class' => 'form-control', 'placeholder' => 'Enter quantity', 'required' => true, 'min'=>0]) !!}
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label class="form-label">Amount</label>
+                    {!! Form::number('amount', $foodMenu->amount ?? old('amount'), ['class' => 'form-control', 'placeholder' => 'Enter amount', 'required' => true, 'min'=>1]) !!}
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <label class="form-label">Image</label>

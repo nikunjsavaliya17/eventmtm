@@ -22,4 +22,14 @@ class FoodPartner extends Model
     {
         return $this->hasOne(User::class, 'user_id', 'created_by');
     }
+
+    public function scopeByActive($q)
+    {
+        $q->where('is_active', 1);
+    }
+
+    public function relatedEvents(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(FoodPartnerEvent::class, 'food_partner_id', 'food_partner_id');
+    }
 }
