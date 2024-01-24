@@ -104,7 +104,7 @@ class HomeController extends Controller
             'food_partner_id' => 'required|numeric',
         ]);
         $food_partner_id = $request->get('food_partner_id');
-        $records = FoodMenu::byActive()->with(['foodPartnerDetail'])->where('food_partner_id', $food_partner_id)->simplePaginate();
+        $records = FoodMenu::byActive()->with(['foodPartnerDetail', 'typeDetail'])->where('food_partner_id', $food_partner_id)->simplePaginate();
         return response()->json(['status' => true, 'message' => 'Success', 'data' => FoodMenuResource::collection($records)]);
     }
 }

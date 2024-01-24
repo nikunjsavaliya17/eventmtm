@@ -20,6 +20,7 @@ class FoodMenuResource extends JsonResource
             'image' => getFileUrl($this->image, FoodMenu::IMG_DIR),
             'ratings' => $this->ratings,
             'food_partner' => new FoodPartnerResource($this->whenLoaded('foodPartnerDetail')),
+            'food_type' => new FoodTypeResource($this->whenLoaded('typeDetail')),
         ];
     }
 }
