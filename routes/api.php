@@ -31,9 +31,14 @@ Route::group(['middleware' => [ValidateUserAccessToken::class]], function () {
         Route::get('profile', 'profile');
         Route::post('profile/update', 'updateProfile');
         Route::post('password/update', 'updatePassword');
+
         Route::get('orders', 'orderList');
         Route::get('order-detail', 'orderDetails');
         Route::post('cancel-order', 'cancelOrder');
+
+        Route::get('cart-list', 'cartList');
+        Route::post('add-cart', 'addCart');
+        Route::post('remove-cart', 'removeCart');
     });
 
     Route::controller(HomeController::class)->group(function () {

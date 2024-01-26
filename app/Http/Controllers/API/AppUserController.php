@@ -4,8 +4,11 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AppUserResource;
+use App\Http\Resources\CartItemResource;
 use App\Http\Resources\OrderResource;
 use App\Models\AppUser;
+use App\Models\AppUserCartDetail;
+use App\Models\FoodMenu;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -101,5 +104,80 @@ class AppUserController extends Controller
         } else {
             return response()->json(['status' => false, 'message' => 'Invalid order', 'data' => []]);
         }
+    }
+
+    public function cartList(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $items = AppUserCartDetail::with(['foodMenuDetail'])->whereHas('foodMenuDetail')->where('app_user_id', $request->get('set_app_user_id'))->orderBy('updated_at', 'desc')->get();
+        $total_amount = AppUserCartDetail::where('app_user_id', $request->get('set_app_user_id'))->sum('total_amount');
+        return response()->json(['status' => true, 'message' => 'Success', 'data' => [
+            'cart_items' => CartItemResource::collection($items),
+            'total_amount' => $total_amount
+        ]]);
+    }
+
+    public function addCart(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $this->validateAPIRequest($request, [
+            'event_id' => 'required',
+            'food_menu_id' => 'required',
+            'food_partner_id' => 'required',
+            'quantity' => 'required',
+        ]);
+        $otherEventExist = AppUserCartDetail::where('app_user_id', $request->get('set_app_user_id'))
+            ->where('event_id', '!=', $request->get('event_id'))->exists();
+        $quantity = $request->get('quantity');
+        if (!$otherEventExist) {
+            $foodMenu = FoodMenu::find($request->get('food_menu_id'));
+            $cartData = AppUserCartDetail::where('app_user_id', $request->get('set_app_user_id'))
+                ->where('event_id', $request->get('event_id'))->where('food_menu_id', $request->get('food_menu_id'))->first();
+            if (isset($cartData)) {
+                $quantity = $cartData->quantity + $quantity;
+                $cartData->update([
+                    'quantity' => $quantity,
+                    'amount' => $foodMenu->amount,
+                    'total_amount' => $foodMenu->amount * $quantity,
+                ]);
+            } else {
+                AppUserCartDetail::create([
+                    'app_user_id' => $request->get('set_app_user_id'),
+                    'event_id' => $request->get('event_id'),
+                    'food_partner_id' => $request->get('food_partner_id'),
+                    'food_menu_id' => $request->get('food_menu_id'),
+                    'quantity' => $quantity,
+                    'amount' => $foodMenu->amount,
+                    'total_amount' => $foodMenu->amount * $quantity,
+                ]);
+            }
+            return response()->json(['status' => true, 'message' => 'Success', 'data' => []]);
+        } else {
+            return response()->json(['status' => false, 'message' => 'Already added food for other event. Please clear those event than add your new event food.', 'data' => []]);
+        }
+    }
+
+    public function removeCart(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $this->validateAPIRequest($request, [
+            'event_id' => 'required',
+            'food_menu_id' => 'required',
+            'quantity' => 'required',
+        ]);
+        $quantity = $request->get('quantity');
+        $foodMenu = FoodMenu::find($request->get('food_menu_id'));
+        $cartData = AppUserCartDetail::where('app_user_id', $request->get('set_app_user_id'))
+            ->where('event_id', $request->get('event_id'))->where('food_menu_id', $request->get('food_menu_id'))->first();
+        if (isset($cartData)) {
+            if ($quantity == $cartData->quantity) {
+                $cartData->delete();
+            } else {
+                $quantity = $cartData->quantity - $quantity;
+                $cartData->update([
+                    'quantity' => $quantity,
+                    'amount' => $foodMenu->amount,
+                    'total_amount' => $foodMenu->amount * $quantity,
+                ]);
+            }
+        }
+        return response()->json(['status' => true, 'message' => 'Success', 'data' => []]);
     }
 }
