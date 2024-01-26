@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AppUserResource;
+use App\Http\Resources\OrderResource;
 use App\Models\AppUser;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -64,8 +66,40 @@ class AppUserController extends Controller
         if (Hash::check($requestData['old_password'], $user->password)) {
             $user->update(['password' => Hash::make($requestData['password'])]);
             return response()->json(['status' => true, 'message' => 'Success', 'data' => []]);
-        }else{
+        } else {
             return response()->json(['status' => false, 'message' => 'Incorrect old password.', 'data' => []]);
+        }
+    }
+
+    public function orderList(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $orders = Order::with(['eventDetail', 'appUserDetail'])->where('app_user_id', $request->get('set_app_user_id'))->orderBy('order_id', 'DESC')->simplePaginate();
+        return response()->json(['status' => true, 'message' => 'Success', 'data' => OrderResource::collection($orders)]);
+    }
+
+    public function orderDetail(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $this->validateAPIRequest($request, [
+            'order_id' => 'required',
+        ]);
+        $order = Order::with(['eventDetail', 'appUserDetail', 'orderItems'])
+            ->where('app_user_id', $request->get('set_app_user_id'))
+            ->where('order_id', $request->get('order_id'))->first();
+        return response()->json(['status' => true, 'message' => 'Success', 'data' => new OrderResource($order)]);
+    }
+
+    public function cancelOrder(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $this->validateAPIRequest($request, [
+            'order_id' => 'required',
+        ]);
+        $order = Order::where('app_user_id', $request->get('set_app_user_id'))
+            ->where('order_id', $request->get('order_id'))->where('status', 0)->first();
+        if (!empty($order)) {
+            $order->update(['status' => 2]);
+            return response()->json(['status' => true, 'message' => 'Success', 'data' => []]);
+        } else {
+            return response()->json(['status' => false, 'message' => 'Invalid order', 'data' => []]);
         }
     }
 }
