@@ -26,6 +26,12 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('verify-otp', 'verifyOtp');
 });
 
+Route::controller(ConfigurationController::class)->group(function () {
+    Route::get('configurations', 'configurations');
+    Route::get('faqs', 'faqs');
+    Route::get('page-detail', 'pageDetail');
+});
+
 Route::group(['middleware' => [ValidateUserAccessToken::class]], function () {
     Route::controller(AppUserController::class)->group(function () {
         Route::get('profile', 'profile');
@@ -46,10 +52,5 @@ Route::group(['middleware' => [ValidateUserAccessToken::class]], function () {
         Route::get('event-detail', 'eventDetail');
         Route::get('restaurants', 'restaurants');
         Route::get('menu-list', 'menuList');
-    });
-
-    Route::controller(ConfigurationController::class)->group(function () {
-        Route::get('faqs', 'faqs');
-        Route::get('page-detail', 'pageDetail');
     });
 });

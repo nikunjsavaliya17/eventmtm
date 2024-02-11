@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\EventCompanyManagementController;
@@ -192,6 +193,13 @@ Route::group(['middleware' => ['auth', 'web']], function () {
             Route::post('/store-update', 'store_update')->name('store_update');
             Route::post('/update-data', 'update_data')->name('update_data');
             Route::post('/delete', 'delete')->name('delete');
+        });
+    });
+
+    Route::group(['middleware' => ['canUser:configuration-read'], 'prefix' => '/configuration', 'as' => 'configuration.'], function () {
+        Route::controller(ConfigurationController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/update', 'update')->name('update');
         });
     });
 });

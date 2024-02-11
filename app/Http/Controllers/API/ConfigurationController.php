@@ -4,12 +4,19 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FaqResource;
+use App\Models\Configuration;
 use App\Models\Faq;
 use App\Models\Page;
 use Illuminate\Http\Request;
 
 class ConfigurationController extends Controller
 {
+    public function configurations(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $records = Configuration::query()->pluck('value', 'identifier')->toArray();
+        return response()->json(['status' => true, 'message' => 'Success', 'data' => $records]);
+    }
+
     public function faqs(Request $request): \Illuminate\Http\JsonResponse
     {
         $faqs = Faq::byActive()->orderBy('display_order', 'DESC')->get();

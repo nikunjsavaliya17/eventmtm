@@ -148,6 +148,14 @@
                     </a>
                 </li>
             @endif
+            @if($user->can('configuration-read'))
+                <li class="@if(request()->segment(1) == 'configuration') active @endif nav-item">
+                    <a class="d-flex align-items-center" href="{{ route('configuration.index') }}">
+                        <i data-feather="mail"></i><span
+                                class="menu-title text-truncate">Configurations</span>
+                    </a>
+                </li>
+            @endif
         </ul>
     </div>
 </div>
