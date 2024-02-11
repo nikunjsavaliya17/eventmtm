@@ -14,6 +14,7 @@ use App\Http\Controllers\FoodPartnerController;
 use App\Http\Controllers\FoodTypeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\SponsorTypeController;
@@ -201,5 +202,11 @@ Route::group(['middleware' => ['auth', 'web']], function () {
             Route::get('/', 'index')->name('index');
             Route::post('/update', 'update')->name('update');
         });
+    });
+
+    Route::controller(ReportController::class)->group(function () {
+        Route::get('orders', 'orders')->name('orders')->middleware(['canUser:orders-read']);
+        Route::get('users', 'appUsers')->name('app_users')->middleware(['canUser:app-users-read']);
+        Route::post('users/update-status', 'updateAppUserStatus')->name('app_users.update_status')->middleware(['canUser:app-users-write']);
     });
 });

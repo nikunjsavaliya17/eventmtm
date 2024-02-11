@@ -105,56 +105,79 @@
                     </li>
                 @endif
             @endif
-            <li class="navigation-header"><span>System</span><i
-                        data-feather="more-horizontal"></i>
-            </li>
-            @if($user->can('admin-user-read'))
-                <li class="@if(request()->segment(1) == 'admin-users') active @endif nav-item">
-                    <a class="d-flex align-items-center" href="{{ route('admin_users.index') }}">
-                        <i data-feather="users"></i><span
-                                class="menu-title text-truncate">Admin Users</span>
-                    </a>
+            @if($user->can('orders-read') || $user->can('app-users-read'))
+                <li class="navigation-header"><span>Reports</span><i
+                            data-feather="more-horizontal"></i>
                 </li>
+                @if($user->can('app-users-read'))
+                    <li class="@if(request()->segment(1) == 'users') active @endif nav-item">
+                        <a class="d-flex align-items-center" href="{{ route('app_users') }}">
+                            <i data-feather="users"></i><span
+                                    class="menu-title text-truncate">App Users</span>
+                        </a>
+                    </li>
+                @endif
+                @if($user->can('orders-read'))
+                    <li class="@if(request()->segment(1) == 'orders') active @endif nav-item">
+                        <a class="d-flex align-items-center" href="{{ route('orders') }}">
+                            <i data-feather="credit-card"></i><span
+                                    class="menu-title text-truncate">Orders</span>
+                        </a>
+                    </li>
+                @endif
             @endif
-            @if($user->can('admin-roles-read'))
-                <li class="@if(request()->segment(1) == 'roles') active @endif nav-item">
-                    <a class="d-flex align-items-center" href="{{ route('roles.index') }}">
-                        <i data-feather="align-left"></i><span
-                                class="menu-title text-truncate">Admin Roles</span>
-                    </a>
+            @if($user->can('admin-user-read') || $user->can('admin-roles-read') || $user->can('faqs-read') || $user->can('custom-page-read') || $user->can('email-templates-read') || $user->can('configuration-read'))
+                <li class="navigation-header"><span>System</span><i
+                            data-feather="more-horizontal"></i>
                 </li>
-            @endif
-            @if($user->can('faqs-read'))
-                <li class="@if(request()->segment(1) == 'faqs') active @endif nav-item">
-                    <a class="d-flex align-items-center" href="{{ route('faqs.index') }}">
-                        <i data-feather="help-circle"></i><span
-                                class="menu-title text-truncate">FAQs</span>
-                    </a>
-                </li>
-            @endif
-            @if($user->can('custom-page-read'))
-                <li class="@if(request()->segment(1) == 'custom-page') active @endif nav-item">
-                    <a class="d-flex align-items-center" href="{{ route('custom_page.index') }}">
-                        <i data-feather="book"></i><span
-                                class="menu-title text-truncate">Pages</span>
-                    </a>
-                </li>
-            @endif
-            @if($user->can('email-templates-read'))
-                <li class="@if(request()->segment(1) == 'email-templates') active @endif nav-item">
-                    <a class="d-flex align-items-center" href="{{ route('email_templates.index') }}">
-                        <i data-feather="mail"></i><span
-                                class="menu-title text-truncate">Email Templates</span>
-                    </a>
-                </li>
-            @endif
-            @if($user->can('configuration-read'))
-                <li class="@if(request()->segment(1) == 'configuration') active @endif nav-item">
-                    <a class="d-flex align-items-center" href="{{ route('configuration.index') }}">
-                        <i data-feather="mail"></i><span
-                                class="menu-title text-truncate">Configurations</span>
-                    </a>
-                </li>
+                @if($user->can('admin-user-read'))
+                    <li class="@if(request()->segment(1) == 'admin-users') active @endif nav-item">
+                        <a class="d-flex align-items-center" href="{{ route('admin_users.index') }}">
+                            <i data-feather="users"></i><span
+                                    class="menu-title text-truncate">Admin Users</span>
+                        </a>
+                    </li>
+                @endif
+                @if($user->can('admin-roles-read'))
+                    <li class="@if(request()->segment(1) == 'roles') active @endif nav-item">
+                        <a class="d-flex align-items-center" href="{{ route('roles.index') }}">
+                            <i data-feather="align-left"></i><span
+                                    class="menu-title text-truncate">Admin Roles</span>
+                        </a>
+                    </li>
+                @endif
+                @if($user->can('faqs-read'))
+                    <li class="@if(request()->segment(1) == 'faqs') active @endif nav-item">
+                        <a class="d-flex align-items-center" href="{{ route('faqs.index') }}">
+                            <i data-feather="help-circle"></i><span
+                                    class="menu-title text-truncate">FAQs</span>
+                        </a>
+                    </li>
+                @endif
+                @if($user->can('custom-page-read'))
+                    <li class="@if(request()->segment(1) == 'custom-page') active @endif nav-item">
+                        <a class="d-flex align-items-center" href="{{ route('custom_page.index') }}">
+                            <i data-feather="book"></i><span
+                                    class="menu-title text-truncate">Pages</span>
+                        </a>
+                    </li>
+                @endif
+                @if($user->can('email-templates-read'))
+                    <li class="@if(request()->segment(1) == 'email-templates') active @endif nav-item">
+                        <a class="d-flex align-items-center" href="{{ route('email_templates.index') }}">
+                            <i data-feather="mail"></i><span
+                                    class="menu-title text-truncate">Email Templates</span>
+                        </a>
+                    </li>
+                @endif
+                @if($user->can('configuration-read'))
+                    <li class="@if(request()->segment(1) == 'configuration') active @endif nav-item">
+                        <a class="d-flex align-items-center" href="{{ route('configuration.index') }}">
+                            <i data-feather="settings"></i><span
+                                    class="menu-title text-truncate">Configurations</span>
+                        </a>
+                    </li>
+                @endif
             @endif
         </ul>
     </div>
