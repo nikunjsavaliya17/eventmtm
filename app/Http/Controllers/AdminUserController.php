@@ -14,8 +14,8 @@ class AdminUserController extends Controller
         $user = auth()->user();
         if ($request->ajax()) {
             $data = User::query()->with(['createdByUser:user_id,name']);
-            if ($request->filled('created_by')) {
-                $data = $data->where('created_by', $request->get('created_by'));
+            if (!$user->hasRole(config('constants.ROLES.SUPER_ADMIN'))){
+                $data = $data->where('created_by', $user->user_id);
             }
             if ($request->filled('is_active')) {
                 $data = $data->where('is_active', $request->get('is_active'));
@@ -62,7 +62,7 @@ class AdminUserController extends Controller
 
     public function add()
     {
-        $roles = Role::query()->pluck('name', 'name')->toArray();
+        $roles = Role::query()->where('name', '!=', 'Super Admin')->pluck('name', 'name')->toArray();
         $formMode = "Add";
         return view('admin_users.form', compact('roles', 'formMode'));
     }
@@ -70,7 +70,7 @@ class AdminUserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        $roles = Role::query()->pluck('name', 'name')->toArray();
+        $roles = Role::query()->where('name', '!=', 'Super Admin')->pluck('name', 'name')->toArray();
         $formMode = "Edit";
         $assign_role = "";
         $assign_role_data = $user->getRoleNames();

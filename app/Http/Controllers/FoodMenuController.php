@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\FoodMenu;
-use App\Models\FoodPartner;
-use App\Models\FoodType;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -15,8 +13,8 @@ class FoodMenuController extends Controller
         $user = auth()->user();
         if ($request->ajax()) {
             $data = FoodMenu::query()->with(['createdByUser:user_id,name', 'typeDetail:food_type_id,title', 'foodPartnerDetail:food_partner_id,company_name']);
-            if ($request->filled('created_by')) {
-                $data = $data->where('created_by', $request->get('created_by'));
+            if (!$user->hasRole(config('constants.ROLES.SUPER_ADMIN'))){
+                $data = $data->where('created_by', $user->user_id);
             }
             if ($request->filled('is_active')) {
                 $data = $data->where('is_active', $request->get('is_active'));
@@ -65,8 +63,8 @@ class FoodMenuController extends Controller
     public function add()
     {
         $formMode = 'Add';
-        $foodTypes = FoodType::pluck('title', 'food_type_id')->toArray();
-        $foodPartners = FoodPartner::pluck('company_name', 'food_partner_id')->toArray();
+        $foodTypes = $this->getFoodTypeArr();
+        $foodPartners = $this->getFoodPartnerArr();
         return view('food_menu.form', compact('formMode', 'foodTypes', 'foodPartners'));
     }
 
@@ -98,8 +96,8 @@ class FoodMenuController extends Controller
     {
         $foodMenu = FoodMenu::findOrFail($id);
         $formMode = 'Edit';
-        $foodTypes = FoodType::pluck('title', 'food_type_id')->toArray();
-        $foodPartners = FoodPartner::pluck('company_name', 'food_partner_id')->toArray();
+        $foodTypes = $this->getFoodTypeArr();
+        $foodPartners = $this->getFoodPartnerArr();
         return view('food_menu.form', compact('formMode', 'foodMenu', 'foodTypes', 'foodPartners'));
     }
 

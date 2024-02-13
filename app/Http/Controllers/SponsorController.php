@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Sponsor;
-use App\Models\SponsorType;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -15,8 +14,8 @@ class SponsorController extends Controller
         $user = auth()->user();
         if ($request->ajax()) {
             $data = Sponsor::query()->with(['createdByUser:user_id,name', 'typeDetail:sponsor_type_id,title', 'eventDetail:event_id,title']);
-            if ($request->filled('created_by')) {
-                $data = $data->where('created_by', $request->get('created_by'));
+            if (!$user->hasRole(config('constants.ROLES.SUPER_ADMIN'))){
+                $data = $data->where('created_by', $user->user_id);
             }
             if ($request->filled('is_active')) {
                 $data = $data->where('is_active', $request->get('is_active'));
@@ -62,8 +61,8 @@ class SponsorController extends Controller
     public function add()
     {
         $formMode = 'Add';
-        $sponsorTypes = SponsorType::pluck('title', 'sponsor_type_id')->toArray();
-        $events = Event::pluck('title', 'event_id')->toArray();
+        $sponsorTypes = $this->getSponsorTypeArr();
+        $events = $this->getEventArr();
         return view('sponsors.form', compact('formMode', 'sponsorTypes', 'events'));
     }
 
@@ -102,8 +101,8 @@ class SponsorController extends Controller
     {
         $sponsor = Sponsor::findOrFail($id);
         $formMode = 'Edit';
-        $sponsorTypes = SponsorType::pluck('title', 'sponsor_type_id')->toArray();
-        $events = Event::pluck('title', 'event_id')->toArray();
+        $sponsorTypes = $this->getSponsorTypeArr();
+        $events = $this->getEventArr();
         return view('sponsors.form', compact('formMode', 'sponsor', 'sponsorTypes', 'events'));
     }
 

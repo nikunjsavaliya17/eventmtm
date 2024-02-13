@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use App\Models\EventCompany;
 use App\Models\EventMedia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -16,8 +15,8 @@ class EventManagementController extends Controller
         $user = auth()->user();
         if ($request->ajax()) {
             $data = Event::query()->with(['createdByUser:user_id,name', 'eventCompanyDetail:event_company_id,title']);
-            if ($request->filled('created_by')) {
-                $data = $data->where('created_by', $request->get('created_by'));
+            if (!$user->hasRole(config('constants.ROLES.SUPER_ADMIN'))){
+                $data = $data->where('created_by', $user->user_id);
             }
             if ($request->filled('is_active')) {
                 $data = $data->where('is_active', $request->get('is_active'));
@@ -63,7 +62,7 @@ class EventManagementController extends Controller
     public function add()
     {
         $formMode = 'Add';
-        $companies = EventCompany::pluck('title', 'event_company_id')->toArray();
+        $companies = $this->getEventCompanyArr();
         return view('event_management.form', compact('formMode', 'companies'));
     }
 
@@ -135,7 +134,7 @@ class EventManagementController extends Controller
     {
         $event = Event::findOrFail($id);
         $formMode = 'Edit';
-        $companies = EventCompany::pluck('title', 'event_company_id')->toArray();
+        $companies = $this->getEventCompanyArr();
         return view('event_management.form', compact('event', 'formMode', 'companies'));
     }
 

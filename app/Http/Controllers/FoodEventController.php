@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Event;
-use App\Models\FoodPartner;
 use App\Models\FoodPartnerEvent;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -18,8 +16,8 @@ class FoodEventController extends Controller
             if ($request->filled('food_partner_id')) {
                 $data = $data->where('food_partner_id', $request->get('food_partner_id'));
             }
-            if ($request->filled('created_by')) {
-                $data = $data->where('created_by', $request->get('created_by'));
+            if (!$user->hasRole(config('constants.ROLES.SUPER_ADMIN'))){
+                $data = $data->where('created_by', $user->user_id);
             }
             if ($request->filled('is_active')) {
                 $data = $data->where('is_active', $request->get('is_active'));
@@ -65,8 +63,8 @@ class FoodEventController extends Controller
     public function add()
     {
         $formMode = 'Add';
-        $foodPartners = FoodPartner::pluck('company_name', 'food_partner_id')->toArray();
-        $events = Event::pluck('title', 'event_id')->toArray();
+        $foodPartners = $this->getFoodPartnerArr();
+        $events = $this->getEventArr();
         return view('food_events.form', compact('formMode', 'foodPartners', 'events'));
     }
 
@@ -99,8 +97,8 @@ class FoodEventController extends Controller
     {
         $foodEvent = FoodPartnerEvent::findOrFail($id);
         $formMode = 'Edit';
-        $events = Event::pluck('title', 'event_id')->toArray();
-        $foodPartners = FoodPartner::pluck('company_name', 'food_partner_id')->toArray();
+        $foodPartners = $this->getFoodPartnerArr();
+        $events = $this->getEventArr();
         return view('food_events.form', compact('formMode', 'foodEvent', 'foodPartners', 'events'));
     }
 

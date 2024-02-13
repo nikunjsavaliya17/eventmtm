@@ -13,8 +13,8 @@ class EventCompanyManagementController extends Controller
         $user = auth()->user();
         if ($request->ajax()) {
             $data = EventCompany::query()->with(['createdByUser:user_id,name']);
-            if ($request->filled('created_by')) {
-                $data = $data->where('created_by', $request->get('created_by'));
+            if (!$user->hasRole(config('constants.ROLES.SUPER_ADMIN'))){
+                $data = $data->where('created_by', $user->user_id);
             }
             if ($request->filled('is_active')) {
                 $data = $data->where('is_active', $request->get('is_active'));
