@@ -100,11 +100,9 @@ class SponsorTypeController extends Controller
         return response()->json(['status' => true]);
     }
 
-    public function delete(Request $request)
+    public function delete($record_id)
     {
-        $requestData = $request->except('_token');
-        $record = SponsorType::findOrFail($requestData['record_id']);
-        $record->delete();
+        SponsorType::destroy($record_id);
         return redirect()->route('sponsor_types.index')->with('success', 'Data Deleted Successfully');
     }
 }

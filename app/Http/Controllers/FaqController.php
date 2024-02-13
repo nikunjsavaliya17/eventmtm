@@ -87,11 +87,9 @@ class FaqController extends Controller
         return response()->json(['status' => true]);
     }
 
-    public function delete(Request $request)
+    public function delete($record_id)
     {
-        $requestData = $request->except('_token');
-        $record = Faq::findOrFail($requestData['record_id']);
-        $record->delete();
+        Faq::destroy($record_id);
         return redirect()->route('faqs.index')->with('success', 'Data Deleted Successfully');
     }
 }

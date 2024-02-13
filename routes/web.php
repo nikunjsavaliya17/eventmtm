@@ -87,7 +87,7 @@ Route::group(['middleware' => ['auth', 'web']], function () {
             Route::get('/edit/{id}', 'edit')->name('edit');
             Route::post('/store-update', 'store_update')->name('store_update');
             Route::post('/update-data', 'update_data')->name('update_data');
-            Route::delete('/delete', 'delete')->name('delete');
+            Route::delete('/delete/{id}', 'delete')->name('delete');
         });
     });
 
@@ -98,7 +98,7 @@ Route::group(['middleware' => ['auth', 'web']], function () {
             Route::get('/edit/{id}', 'edit')->name('edit');
             Route::post('/store-update', 'store_update')->name('store_update');
             Route::post('/update-data', 'update_data')->name('update_data');
-            Route::delete('/delete', 'delete')->name('delete');
+            Route::delete('/delete/{id}', 'delete')->name('delete');
         });
     });
 
@@ -109,7 +109,7 @@ Route::group(['middleware' => ['auth', 'web']], function () {
             Route::get('/edit/{id}', 'edit')->name('edit');
             Route::post('/store-update', 'store_update')->name('store_update');
             Route::post('/update-data', 'update_data')->name('update_data');
-            Route::delete('/delete', 'delete')->name('delete');
+            Route::delete('/delete/{id}', 'delete')->name('delete');
         });
     });
 
@@ -120,7 +120,7 @@ Route::group(['middleware' => ['auth', 'web']], function () {
             Route::get('/edit/{id}', 'edit')->name('edit');
             Route::post('/store-update', 'store_update')->name('store_update');
             Route::post('/update-data', 'update_data')->name('update_data');
-            Route::delete('/delete', 'delete')->name('delete');
+            Route::delete('/delete/{id}', 'delete')->name('delete');
         });
     });
 
@@ -131,7 +131,7 @@ Route::group(['middleware' => ['auth', 'web']], function () {
             Route::get('/edit/{id}', 'edit')->name('edit');
             Route::post('/store-update', 'store_update')->name('store_update');
             Route::post('/update-data', 'update_data')->name('update_data');
-            Route::delete('/delete', 'delete')->name('delete');
+            Route::delete('/delete/{id}', 'delete')->name('delete');
         });
     });
 
@@ -142,7 +142,7 @@ Route::group(['middleware' => ['auth', 'web']], function () {
             Route::get('/edit/{id}', 'edit')->name('edit');
             Route::post('/store-update', 'store_update')->name('store_update');
             Route::post('/update-data', 'update_data')->name('update_data');
-            Route::delete('/delete', 'delete')->name('delete');
+            Route::delete('/delete/{id}', 'delete')->name('delete');
         });
     });
 
@@ -153,7 +153,7 @@ Route::group(['middleware' => ['auth', 'web']], function () {
             Route::get('/edit/{id}', 'edit')->name('edit');
             Route::post('/store-update', 'store_update')->name('store_update');
             Route::post('/update-data', 'update_data')->name('update_data');
-            Route::delete('/delete', 'delete')->name('delete');
+            Route::delete('/delete/{id}', 'delete')->name('delete');
         });
     });
 
@@ -164,7 +164,7 @@ Route::group(['middleware' => ['auth', 'web']], function () {
             Route::get('/edit/{id}', 'edit')->name('edit');
             Route::post('/store-update', 'store_update')->name('store_update');
             Route::post('/update-data', 'update_data')->name('update_data');
-            Route::delete('/delete', 'delete')->name('delete');
+            Route::delete('/delete/{id}', 'delete')->name('delete');
         });
     });
 
@@ -182,7 +182,7 @@ Route::group(['middleware' => ['auth', 'web']], function () {
             Route::get('/edit/{id}', 'edit')->name('edit');
             Route::post('/store-update', 'store_update')->name('store_update');
             Route::post('/update-data', 'update_data')->name('update_data');
-            Route::delete('/delete', 'delete')->name('delete');
+            Route::delete('/delete/{id}', 'delete')->name('delete');
         });
     });
 
@@ -193,7 +193,7 @@ Route::group(['middleware' => ['auth', 'web']], function () {
             Route::get('/edit/{id}', 'edit')->name('edit');
             Route::post('/store-update', 'store_update')->name('store_update');
             Route::post('/update-data', 'update_data')->name('update_data');
-            Route::delete('/delete', 'delete')->name('delete');
+            Route::delete('/delete/{id}', 'delete')->name('delete');
         });
     });
 

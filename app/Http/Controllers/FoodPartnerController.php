@@ -111,11 +111,9 @@ class FoodPartnerController extends Controller
         return response()->json(['status' => true]);
     }
 
-    public function delete(Request $request)
+    public function delete($record_id)
     {
-        $requestData = $request->except('_token');
-        $record = FoodPartner::findOrFail($requestData['record_id']);
-        $record->delete();
+        FoodPartner::destroy($record_id);
         return redirect()->route('food_partners.index')->with('success', 'Data Deleted Successfully');
     }
 }

@@ -100,11 +100,9 @@ class FoodTypeController extends Controller
         return response()->json(['status' => true]);
     }
 
-    public function delete(Request $request)
+    public function delete($record_id)
     {
-        $requestData = $request->except('_token');
-        $record = FoodType::findOrFail($requestData['record_id']);
-        $record->delete();
+        FoodType::destroy($record_id);
         return redirect()->route('food_types.index')->with('success', 'Data Deleted Successfully');
     }
 }
