@@ -38,7 +38,7 @@ function fileExist($file_name, $path): bool
 
 function getFileUrl($file_name, $path): string|\Illuminate\Contracts\Routing\UrlGenerator|\Illuminate\Contracts\Foundation\Application
 {
-    return url('storage/' . $path . '/' . $file_name);
+    return url(env('STORAGE_PATH').'/' . $path . '/' . $file_name);
 }
 
 function formatAmount($amount): string
