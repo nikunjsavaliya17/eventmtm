@@ -4,8 +4,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
-    <meta name="author" content="BrandSpot">
-    <title>Page Not Found - BrandSpot</title>
+    <meta name="author" content="EventMTM">
+    <title>Page Not Found - EventMTM</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
 
@@ -55,7 +55,7 @@
                             </g>
                         </g>
                     </svg>
-                    <h2 class="brand-text text-primary ms-1">BrandStock</h2>
+                    <h2 class="brand-text text-primary ms-1">EventMTM</h2>
                 </a>
                 <div class="misc-inner p-2 p-sm-3">
                     <div class="w-100 text-center">
